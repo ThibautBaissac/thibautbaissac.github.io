@@ -1,0 +1,3251 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AI Terminology Glossary</title>
+        <style>
+            :root {
+                --text: #1a1a2e;
+                --muted: #555;
+                --accent: #2d5a7b;
+                --bg: #ffffff;
+                --quote-bg: #f4f7fa;
+                --divider: #e0e0e0;
+                --card-hover: 0 3px 12px rgba(0, 0, 0, 0.1);
+                --tag-bg: #e8eef3;
+                --tag-active-bg: #2d5a7b;
+                --tag-active-text: #fff;
+                --search-bg: #f8f9fb;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: "Georgia", "Times New Roman", serif;
+                color: var(--text);
+                background: var(--bg);
+                line-height: 1.75;
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 40px 24px 80px;
+            }
+            header {
+                margin-bottom: 32px;
+                border-bottom: 2px solid var(--accent);
+                padding-bottom: 16px;
+            }
+            h1 {
+                font-size: 1.6rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                color: var(--accent);
+                margin-bottom: 6px;
+            }
+            .subtitle {
+                font-size: 0.9rem;
+                color: var(--muted);
+                font-style: italic;
+            }
+            .search-container {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: var(--bg);
+                padding: 16px 0 12px;
+                border-bottom: 1px solid var(--divider);
+                margin-bottom: 20px;
+            }
+            .search-box {
+                position: relative;
+            }
+            .search-box input {
+                width: 100%;
+                padding: 12px 16px 12px 42px;
+                font-family: "Menlo", "Consolas", monospace;
+                font-size: 0.9rem;
+                border: 1px solid var(--divider);
+                border-radius: 6px;
+                background: var(--search-bg);
+                color: var(--text);
+                outline: none;
+                transition:
+                    border-color 0.2s,
+                    box-shadow 0.2s;
+            }
+            .search-box input:focus {
+                border-color: var(--accent);
+                box-shadow: 0 0 0 3px rgba(45, 90, 123, 0.1);
+            }
+            .search-box input::placeholder {
+                color: #999;
+            }
+            .search-icon {
+                position: absolute;
+                left: 14px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #999;
+                font-size: 1rem;
+                pointer-events: none;
+            }
+            .search-shortcut {
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-family: "Menlo", "Consolas", monospace;
+                font-size: 0.7rem;
+                color: #aaa;
+                background: #eee;
+                padding: 2px 6px;
+                border-radius: 3px;
+                border: 1px solid #ddd;
+            }
+            .stats-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.82rem;
+                color: var(--muted);
+                margin-bottom: 16px;
+                font-family: "Menlo", "Consolas", monospace;
+            }
+            .stats-bar .count {
+                font-weight: 700;
+                color: var(--accent);
+            }
+            .view-toggle {
+                display: flex;
+                gap: 4px;
+            }
+            .view-toggle button {
+                background: var(--tag-bg);
+                border: 1px solid var(--divider);
+                border-radius: 4px;
+                padding: 4px 10px;
+                font-family: "Menlo", "Consolas", monospace;
+                font-size: 0.75rem;
+                color: var(--muted);
+                cursor: pointer;
+                transition: all 0.15s;
+            }
+            .view-toggle button.active {
+                background: var(--tag-active-bg);
+                color: var(--tag-active-text);
+                border-color: var(--tag-active-bg);
+            }
+            .filter-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-bottom: 24px;
+            }
+            .filter-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                padding: 4px 12px;
+                font-family: "Menlo", "Consolas", monospace;
+                font-size: 0.72rem;
+                border: 1px solid var(--divider);
+                border-radius: 14px;
+                background: var(--bg);
+                color: var(--muted);
+                cursor: pointer;
+                transition: all 0.15s;
+                white-space: nowrap;
+                user-select: none;
+            }
+            .filter-pill:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+            .filter-pill.active {
+                background: var(--tag-active-bg);
+                color: var(--tag-active-text);
+                border-color: var(--tag-active-bg);
+            }
+            .filter-pill .pill-count {
+                font-size: 0.65rem;
+                opacity: 0.7;
+            }
+            .filter-pill.active .pill-count {
+                opacity: 0.9;
+            }
+            .section-header {
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: var(--text);
+                margin-top: 36px;
+                margin-bottom: 12px;
+                padding-bottom: 6px;
+                border-bottom: 1px solid var(--divider);
+                display: flex;
+                align-items: baseline;
+                gap: 8px;
+            }
+            .section-header .section-count {
+                font-size: 0.75rem;
+                font-weight: 400;
+                color: var(--muted);
+                font-family: "Menlo", "Consolas", monospace;
+            }
+            .terms-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .term-card {
+                background: var(--bg);
+                border: 1px solid var(--divider);
+                border-radius: 6px;
+                padding: 14px 18px;
+                transition:
+                    box-shadow 0.2s,
+                    border-color 0.2s;
+                cursor: default;
+            }
+            .term-card:hover {
+                box-shadow: var(--card-hover);
+                border-color: var(--accent);
+            }
+            .term-card .term-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 12px;
+                margin-bottom: 6px;
+            }
+            .term-card .term-name {
+                font-weight: 700;
+                font-size: 0.95rem;
+                color: var(--accent);
+            }
+            .term-card .term-id {
+                font-family: "Menlo", "Consolas", monospace;
+                font-size: 0.7rem;
+                color: #bbb;
+                flex-shrink: 0;
+            }
+            .term-card .term-explanation {
+                font-size: 0.88rem;
+                color: var(--text);
+                line-height: 1.6;
+            }
+            .term-card .term-meta {
+                display: flex;
+                gap: 8px;
+                margin-top: 8px;
+                flex-wrap: wrap;
+            }
+            .term-card .term-tag {
+                font-family: "Menlo", "Consolas", monospace;
+                font-size: 0.68rem;
+                padding: 2px 8px;
+                border-radius: 10px;
+                background: var(--tag-bg);
+                color: var(--muted);
+            }
+            .terms-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.85rem;
+            }
+            .terms-table th,
+            .terms-table td {
+                text-align: left;
+                padding: 10px 14px;
+                border: 1px solid var(--divider);
+                vertical-align: top;
+            }
+            .terms-table th {
+                background: var(--quote-bg);
+                font-weight: 700;
+                color: var(--accent);
+                position: sticky;
+                top: 62px;
+                z-index: 50;
+            }
+            .terms-table tr:hover td {
+                background: var(--quote-bg);
+            }
+            .terms-table .col-id {
+                width: 40px;
+                text-align: center;
+                color: #bbb;
+                font-family: "Menlo", monospace;
+                font-size: 0.75rem;
+            }
+            .terms-table .col-term {
+                width: 180px;
+                font-weight: 700;
+                color: var(--accent);
+            }
+            .terms-table .col-tag {
+                width: 110px;
+            }
+            .terms-table .col-tag span {
+                font-family: "Menlo", monospace;
+                font-size: 0.72rem;
+                padding: 2px 6px;
+                background: var(--tag-bg);
+                border-radius: 8px;
+                color: var(--muted);
+            }
+            mark {
+                background: rgba(45, 90, 123, 0.15);
+                color: inherit;
+                padding: 0 1px;
+                border-radius: 2px;
+            }
+            .empty-state {
+                text-align: center;
+                padding: 60px 20px;
+                color: var(--muted);
+                font-style: italic;
+            }
+            .empty-state .empty-icon {
+                font-size: 2rem;
+                margin-bottom: 12px;
+                opacity: 0.4;
+            }
+            .hidden {
+                display: none !important;
+            }
+            @media (max-width: 600px) {
+                body {
+                    padding: 20px 12px 48px;
+                }
+                h1 {
+                    font-size: 1.3rem;
+                }
+                .filter-row {
+                    gap: 4px;
+                }
+                .filter-pill {
+                    font-size: 0.65rem;
+                    padding: 3px 8px;
+                }
+                .term-card {
+                    padding: 10px 14px;
+                }
+                .terms-table {
+                    font-size: 0.78rem;
+                }
+                .terms-table th,
+                .terms-table td {
+                    padding: 6px 8px;
+                }
+                .search-shortcut {
+                    display: none;
+                }
+            }
+            @media (min-width: 700px) {
+                .terms-grid {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 12px;
+                }
+            }
+            @media print {
+                .search-container,
+                .filter-row,
+                .stats-bar,
+                .view-toggle {
+                    display: none;
+                }
+                .term-card {
+                    break-inside: avoid;
+                    border: 1px solid #ccc;
+                }
+                body {
+                    max-width: 100%;
+                    padding: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>AI Terminology Glossary</h1>
+            <p class="subtitle">
+                289 terms across 25 categories &mdash; April 2026
+            </p>
+        </header>
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">&#x1F50D;</span>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search terms, explanations, categories..."
+                    autocomplete="off"
+                />
+                <span class="search-shortcut">/</span>
+            </div>
+        </div>
+        <div class="stats-bar">
+            <span
+                >Showing <span class="count" id="resultCount">289</span> of 289
+                terms</span
+            >
+            <div class="view-toggle">
+                <button
+                    id="viewCards"
+                    class="active"
+                    onclick="setView('cards')"
+                >
+                    Cards
+                </button>
+                <button id="viewTable" onclick="setView('table')">Table</button>
+            </div>
+        </div>
+        <div class="filter-row" id="filterRow"></div>
+        <div id="cardsView"><div id="termsContainer"></div></div>
+        <div id="tableView" class="hidden">
+            <table class="terms-table">
+                <thead>
+                    <tr>
+                        <th class="col-id">#</th>
+                        <th class="col-term">Term</th>
+                        <th>Explanation</th>
+                        <th class="col-tag">Category</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        <div class="empty-state hidden" id="emptyState">
+            <div class="empty-icon">&#x1F50D;</div>
+            <p>No terms match your search.</p>
+            <p style="font-size: 0.85rem; margin-top: 8px">
+                Try a different keyword or clear the filters.
+            </p>
+        </div>
+        <script>
+            const TERMS = [
+                {
+                    id: 1,
+                    term: "Artificial Intelligence (AI)",
+                    explanation:
+                        "The broad field of computer science focused on creating systems capable of performing tasks that typically require human intelligence, such as reasoning, learning, perception, and decision-making.",
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 2,
+                    term: "Machine Learning (ML)",
+                    explanation:
+                        "A subset of AI where systems learn patterns from data and improve performance on tasks without being explicitly programmed, using statistical techniques to generalize from examples.",
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 3,
+                    term: "Deep Learning",
+                    explanation:
+                        'A subset of machine learning that uses artificial neural networks with multiple layers (hence "deep") to learn hierarchical representations of data. Powers most modern AI breakthroughs.',
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 4,
+                    term: "Neural Network",
+                    explanation:
+                        "A computational model inspired by the human brain, consisting of interconnected layers of nodes (neurons) that process and transform input data through weighted connections and activation functions.",
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 5,
+                    term: "Supervised Learning",
+                    explanation:
+                        "A machine learning paradigm where models are trained on labeled data (input-output pairs), learning to map inputs to correct outputs. Used for classification and regression tasks.",
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 6,
+                    term: "Unsupervised Learning",
+                    explanation:
+                        "A machine learning paradigm where models find patterns in unlabeled data without predefined outputs. Includes clustering, dimensionality reduction, and density estimation.",
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 7,
+                    term: "Reinforcement Learning (RL)",
+                    explanation:
+                        "A learning paradigm where an agent learns optimal behavior by interacting with an environment, receiving rewards or penalties for actions, and maximizing cumulative reward over time.",
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 8,
+                    term: "Transfer Learning",
+                    explanation:
+                        "A technique where a model trained on one task is repurposed as the starting point for a model on a different but related task, leveraging previously learned features to reduce training time and data requirements.",
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 9,
+                    term: "Natural Language Processing (NLP)",
+                    explanation:
+                        "The branch of AI focused on enabling computers to understand, interpret, generate, and interact with human language in useful ways.",
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 10,
+                    term: "Computer Vision",
+                    explanation:
+                        "The field of AI that enables machines to interpret and understand visual information from images and video, including object detection, image classification, and scene understanding.",
+                    tag: "Core AI/ML",
+                    section: "Core AI/ML Foundations",
+                    sectionNum: 1,
+                },
+                {
+                    id: 11,
+                    term: "Transformer",
+                    explanation:
+                        'The dominant neural network architecture (introduced in the 2017 paper "Attention Is All You Need") that uses self-attention mechanisms to process sequential data in parallel. Powers virtually all modern LLMs and many vision models.',
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 12,
+                    term: "Self-Attention",
+                    explanation:
+                        "A mechanism within transformers that allows each token in a sequence to compute relevance scores against every other token, enabling the model to understand contextual relationships regardless of distance in the input.",
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 13,
+                    term: "Multi-Head Attention",
+                    explanation:
+                        'An extension of self-attention where the model runs multiple attention computations in parallel (each "head" learns different relationship patterns), then concatenates the results for richer representations.',
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 14,
+                    term: "Token",
+                    explanation:
+                        'The basic unit of text that an LLM processes. A token can represent a character, sub-word, word, or short phrase depending on the tokenizer. For example, "understanding" might be split into "under" + "standing".',
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 15,
+                    term: "Tokenization",
+                    explanation:
+                        "The process of converting raw text into a sequence of tokens that a model can process. Common tokenizers include Byte-Pair Encoding (BPE), WordPiece, and SentencePiece.",
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 16,
+                    term: "Context Window",
+                    explanation:
+                        'The maximum number of tokens an LLM can consider at once during inference. Determines how much text the model can "see" and reason about in a single interaction. Modern models range from 4K to 1M+ tokens.',
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 17,
+                    term: "Embedding",
+                    explanation:
+                        "A dense, fixed-dimensional vector representation of data (text, images, etc.) in a continuous space where semantically similar items are positioned closer together. Embeddings are fundamental to search, retrieval, and similarity tasks.",
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 18,
+                    term: "Positional Encoding",
+                    explanation:
+                        "A technique that injects information about the position of tokens in a sequence into the model, since transformers (unlike RNNs) process all tokens simultaneously and have no inherent sense of order.",
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 19,
+                    term: "KV Cache (Key-Value Cache)",
+                    explanation:
+                        "A memory optimization for autoregressive LLMs that stores previously computed key and value tensors from the attention mechanism, avoiding redundant computation when generating each new token. A critical target for inference optimization.",
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 20,
+                    term: "Softmax",
+                    explanation:
+                        "A mathematical function used in the attention mechanism (and output layer) that converts raw scores into a probability distribution, ensuring all attention weights sum to 1.",
+                    tag: "Architecture",
+                    section: "Transformer Architecture & LLM Internals",
+                    sectionNum: 2,
+                },
+                {
+                    id: 21,
+                    term: "Large Language Model (LLM)",
+                    explanation:
+                        "A deep learning model trained on massive text corpora (billions to trillions of tokens) that can understand, generate, translate, and reason about human language. Examples: GPT-4, Claude, Llama, Gemini.",
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 22,
+                    term: "Foundation Model",
+                    explanation:
+                        'A large-scale, pre-trained AI model trained on broad data that can be adapted to a wide range of downstream tasks through fine-tuning or prompting. The term emphasizes that these models serve as a base ("foundation") for many applications.',
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 23,
+                    term: "Frontier Model",
+                    explanation:
+                        "A general-purpose AI model trained at extreme computational scale (typically >10^26 FLOPs) that pushes the state-of-the-art in capabilities. In 2026, the concept has fractured into regulatory frontier, efficiency frontier, and cost frontier.",
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 24,
+                    term: "Small Language Model (SLM)",
+                    explanation:
+                        "A language model with a smaller parameter count (typically <10B parameters) optimized for efficiency, edge deployment, and specific tasks. Trades some generality for speed and lower resource requirements. Examples: Phi-3, Gemma.",
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 25,
+                    term: "Vision Language Model (VLM)",
+                    explanation:
+                        "A model that jointly processes visual and textual information, enabling tasks like image captioning, visual question answering, and document understanding. Examples: GPT-4V, Claude Vision, LLaVA.",
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 26,
+                    term: "Mixture of Experts (MoE)",
+                    explanation:
+                        'An architecture where a model contains multiple specialized sub-networks ("experts") and a gating mechanism routes each input to only a subset of experts. This allows massive total parameter counts while keeping per-inference computation manageable. Used by DeepSeek-R1, Mixtral, and others.',
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 27,
+                    term: "Reasoning Model",
+                    explanation:
+                        'A model specifically trained (typically via reinforcement learning) to perform step-by-step logical reasoning before producing an answer. These models "think" through problems using chain-of-thought before responding. Examples: OpenAI o1/o3, DeepSeek-R1.',
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 28,
+                    term: "Generative Adversarial Network (GAN)",
+                    explanation:
+                        "An architecture with two networks -- a generator that creates synthetic data and a discriminator that distinguishes real from fake -- trained adversarially. Historically important for image generation; largely superseded by diffusion models for that task.",
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 29,
+                    term: "Variational Autoencoder (VAE)",
+                    explanation:
+                        "A generative model that learns a compressed latent representation of input data as a probability distribution, enabling smooth interpolation and generation of new samples. Often used as a component in larger systems like Stable Diffusion.",
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 30,
+                    term: "Diffusion Model",
+                    explanation:
+                        "A generative model that learns to create data by reversing a gradual noising process -- starting from pure noise and iteratively denoising to produce high-quality outputs (images, audio, video). Powers DALL-E, Stable Diffusion, Midjourney, and Sora.",
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 31,
+                    term: "Large Action Model (LAM)",
+                    explanation:
+                        "An emerging model type designed not just to generate text but to take actions in the real world or digital environments, such as controlling software, navigating websites, or operating tools autonomously.",
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 32,
+                    term: "Open-Weight Model",
+                    explanation:
+                        'A model whose trained parameters (weights) are publicly released for download and use, but may have restrictions on commercial use or modification. Distinct from fully "open-source" which also requires open training data and code. Examples: Llama, DeepSeek, Qwen.',
+                    tag: "Model Types",
+                    section: "Model Types & Architectures",
+                    sectionNum: 3,
+                },
+                {
+                    id: 33,
+                    term: "Pre-training",
+                    explanation:
+                        "The initial, most compute-intensive phase of LLM training where the model learns general language understanding by predicting the next token across massive unlabeled text corpora (trillions of tokens). Creates the foundation of the model's knowledge.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 34,
+                    term: "Post-training",
+                    explanation:
+                        "All training stages that come after pre-training, including supervised fine-tuning, instruction tuning, RLHF, and other alignment techniques. Transforms a raw pre-trained model into a useful, safe assistant.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 35,
+                    term: "Supervised Fine-Tuning (SFT)",
+                    explanation:
+                        "The first post-training step where the model is trained on curated, high-quality input-output examples (typically human-written) to learn instruction-following behavior. Transforms a base model into an assistant.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 36,
+                    term: "Instruction Tuning",
+                    explanation:
+                        "A specialized form of fine-tuning that trains a model to follow natural language instructions and perform diverse tasks, using datasets of (instruction, response) pairs across many task types.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 37,
+                    term: "RLHF (Reinforcement Learning from Human Feedback)",
+                    explanation:
+                        "A training technique where the model is refined using human preference judgments. Humans rank model outputs, a reward model is trained on these preferences, and the LLM is optimized to maximize the reward via reinforcement learning (typically PPO).",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 38,
+                    term: "RLAIF (Reinforcement Learning from AI Feedback)",
+                    explanation:
+                        "A variant of RLHF where AI-generated feedback replaces or supplements human feedback, enabling more scalable alignment. Used in Constitutional AI and other approaches.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 39,
+                    term: "Reward Model",
+                    explanation:
+                        "A model trained on human preference data that scores LLM outputs based on quality, helpfulness, and safety. Used as the reward signal in RLHF to guide the LLM toward preferred behaviors.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 40,
+                    term: "DPO (Direct Preference Optimization)",
+                    explanation:
+                        "A simpler alternative to RLHF that directly optimizes the language model on human preference pairs (preferred vs. rejected responses) without needing a separate reward model or RL training loop. Introduced in 2023, widely adopted by 2025.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 41,
+                    term: "GRPO (Group Relative Policy Optimization)",
+                    explanation:
+                        "An advanced preference optimization technique (popularized by DeepSeek) that extends DPO by evaluating groups of responses relative to each other rather than simple pairs, enabling more nuanced alignment.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 42,
+                    term: "PPO (Proximal Policy Optimization)",
+                    explanation:
+                        'A reinforcement learning algorithm commonly used in RLHF to update the language model policy. It constrains updates to be "proximal" (close) to the current policy to ensure stable training.',
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 43,
+                    term: "RLVR (Reinforcement Learning from Verifiable Rewards)",
+                    explanation:
+                        "A 2025 technique where LLMs are trained against automatically verifiable reward signals (e.g., math problem correctness) rather than human judgments. Models spontaneously develop reasoning strategies through this process.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 44,
+                    term: "Scaling Laws",
+                    explanation:
+                        "Empirical relationships showing that model performance improves predictably as training compute, model size, and dataset size increase. Originally discovered for training, now also validated for inference-time (test-time) compute.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 45,
+                    term: "Synthetic Data",
+                    explanation:
+                        "Data generated by AI models rather than collected from real-world sources. Increasingly used for training, but poses risks of model collapse when models are trained recursively on AI-generated content. By April 2025, over 74% of newly created webpages contained AI-generated text.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 46,
+                    term: "Data Curation",
+                    explanation:
+                        "The process of selecting, cleaning, filtering, and organizing training data to maximize model quality. Increasingly recognized as one of the most important factors in model performance, often more impactful than architecture changes.",
+                    tag: "Training",
+                    section: "Training Pipeline",
+                    sectionNum: 4,
+                },
+                {
+                    id: 47,
+                    term: "Fine-Tuning",
+                    explanation:
+                        "The process of further training a pre-trained model on a smaller, task-specific or domain-specific dataset to adapt it for particular use cases, improving performance on targeted tasks.",
+                    tag: "Fine-Tuning",
+                    section: "Fine-Tuning & Adaptation",
+                    sectionNum: 5,
+                },
+                {
+                    id: 48,
+                    term: "PEFT (Parameter-Efficient Fine-Tuning)",
+                    explanation:
+                        "A family of techniques that fine-tune only a small subset of model parameters (or add a small number of new parameters) rather than updating the entire model. Dramatically reduces compute and memory requirements.",
+                    tag: "Fine-Tuning",
+                    section: "Fine-Tuning & Adaptation",
+                    sectionNum: 5,
+                },
+                {
+                    id: 49,
+                    term: "LoRA (Low-Rank Adaptation)",
+                    explanation:
+                        "The most popular PEFT method. Inserts small, trainable low-rank matrices into transformer layers while keeping original weights frozen. Achieves near-full-fine-tuning performance at a fraction of the compute and memory cost.",
+                    tag: "Fine-Tuning",
+                    section: "Fine-Tuning & Adaptation",
+                    sectionNum: 5,
+                },
+                {
+                    id: 50,
+                    term: "QLoRA (Quantized LoRA)",
+                    explanation:
+                        "Combines LoRA with quantization -- the base model is loaded in 4-bit precision while LoRA adapters are trained in higher precision. Enables fine-tuning of very large models on consumer GPUs.",
+                    tag: "Fine-Tuning",
+                    section: "Fine-Tuning & Adaptation",
+                    sectionNum: 5,
+                },
+                {
+                    id: 51,
+                    term: "Adapter",
+                    explanation:
+                        "A lightweight module inserted into a pre-trained model's layers that can be trained for specific tasks while the base model remains frozen. An early form of PEFT that inspired LoRA and similar techniques.",
+                    tag: "Fine-Tuning",
+                    section: "Fine-Tuning & Adaptation",
+                    sectionNum: 5,
+                },
+                {
+                    id: 52,
+                    term: "Knowledge Distillation",
+                    explanation:
+                        'A model compression technique where a smaller "student" model is trained to mimic the behavior of a larger "teacher" model. The student can achieve 80-90% of the teacher\'s performance at a fraction of the compute cost.',
+                    tag: "Fine-Tuning",
+                    section: "Fine-Tuning & Adaptation",
+                    sectionNum: 5,
+                },
+                {
+                    id: 53,
+                    term: "RAG (Retrieval-Augmented Generation)",
+                    explanation:
+                        "A technique that enhances LLM responses by retrieving relevant documents from an external knowledge base at query time and including them in the model's context. Reduces hallucinations and keeps responses grounded in up-to-date, domain-specific information without retraining.",
+                    tag: "RAG",
+                    section: "Retrieval-Augmented Generation (RAG) & Knowledge",
+                    sectionNum: 6,
+                },
+                {
+                    id: 54,
+                    term: "Vector Database",
+                    explanation:
+                        "A specialized database optimized for storing and querying high-dimensional vector embeddings. Uses approximate nearest neighbor (ANN) algorithms (HNSW, IVF, PQ) for fast similarity search. Examples: Pinecone, Weaviate, Qdrant, Chroma, pgvector.",
+                    tag: "RAG",
+                    section: "Retrieval-Augmented Generation (RAG) & Knowledge",
+                    sectionNum: 6,
+                },
+                {
+                    id: 55,
+                    term: "Semantic Search",
+                    explanation:
+                        "Search that matches based on meaning rather than exact keywords, using vector embeddings to find conceptually similar content. Typically powered by embedding models and vector databases.",
+                    tag: "RAG",
+                    section: "Retrieval-Augmented Generation (RAG) & Knowledge",
+                    sectionNum: 6,
+                },
+                {
+                    id: 56,
+                    term: "Chunking",
+                    explanation:
+                        "The process of splitting documents into smaller segments (chunks) for embedding and retrieval in RAG systems. Strategies include fixed-size, sentence-based, heading-aware, and semantic chunking (which detects thematic shifts). Semantic chunking improves recall up to 9% over fixed-size approaches.",
+                    tag: "RAG",
+                    section: "Retrieval-Augmented Generation (RAG) & Knowledge",
+                    sectionNum: 6,
+                },
+                {
+                    id: 57,
+                    term: "Reranking",
+                    explanation:
+                        "A second-stage retrieval step where a cross-encoder model scores query-document pairs together to reorder initial retrieval results by relevance. Improves precision by 10-30% compared to vector search alone. Models: Cohere Rerank, BGE Reranker.",
+                    tag: "RAG",
+                    section: "Retrieval-Augmented Generation (RAG) & Knowledge",
+                    sectionNum: 6,
+                },
+                {
+                    id: 58,
+                    term: "Hybrid Search",
+                    explanation:
+                        "A retrieval approach combining keyword-based search (BM25) with vector similarity search, then fusing results (often via Reciprocal Rank Fusion). Consistently outperforms either method alone.",
+                    tag: "RAG",
+                    section: "Retrieval-Augmented Generation (RAG) & Knowledge",
+                    sectionNum: 6,
+                },
+                {
+                    id: 59,
+                    term: "GraphRAG",
+                    explanation:
+                        "An advanced RAG approach that augments vector retrieval with knowledge graph relationships, building entity graphs during document ingestion and traversing relationships during retrieval to surface indirectly related content. Achieves up to 99% search precision for structured domains.",
+                    tag: "RAG",
+                    section: "Retrieval-Augmented Generation (RAG) & Knowledge",
+                    sectionNum: 6,
+                },
+                {
+                    id: 60,
+                    term: "Agentic RAG",
+                    explanation:
+                        "A RAG architecture where autonomous agents plan multi-step retrieval strategies, decompose complex queries into sub-queries, choose retrieval tools dynamically, reflect on intermediate answers, and adapt their approach for complex information needs.",
+                    tag: "RAG",
+                    section: "Retrieval-Augmented Generation (RAG) & Knowledge",
+                    sectionNum: 6,
+                },
+                {
+                    id: 61,
+                    term: "Grounding",
+                    explanation:
+                        "The practice of connecting LLM outputs to verifiable external data sources (documents, databases, APIs) to ensure factual accuracy and reduce hallucinations. RAG is the most common grounding technique.",
+                    tag: "RAG",
+                    section: "Retrieval-Augmented Generation (RAG) & Knowledge",
+                    sectionNum: 6,
+                },
+                {
+                    id: 62,
+                    term: "Prompt",
+                    explanation:
+                        "The natural language input given to an LLM to elicit a desired output. The quality and structure of prompts significantly affects response quality.",
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 63,
+                    term: "System Prompt",
+                    explanation:
+                        "A special instruction set provided to an LLM at the beginning of a conversation that defines its role, behavior, constraints, and output format. Persists across the conversation and takes precedence over user messages.",
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 64,
+                    term: "Zero-Shot Prompting",
+                    explanation:
+                        "Asking a model to perform a task without providing any examples, relying entirely on the model's pre-trained knowledge and instruction-following ability.",
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 65,
+                    term: "Few-Shot Prompting",
+                    explanation:
+                        "Including a small number of input-output examples in the prompt to demonstrate the desired task format and behavior. Remains one of the highest-ROI prompting techniques.",
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 66,
+                    term: "Chain-of-Thought (CoT) Prompting",
+                    explanation:
+                        'A technique that instructs the model to "think step by step," breaking complex reasoning into intermediate steps before arriving at a final answer. Dramatically improves performance on math, logic, and multi-step reasoning tasks.',
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 67,
+                    term: "Self-Consistency Prompting",
+                    explanation:
+                        "An advanced technique that generates multiple chain-of-thought reasoning paths for the same problem and selects the most consistent answer, reducing errors from any single flawed reasoning chain.",
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 68,
+                    term: "Meta-Prompting",
+                    explanation:
+                        "Using a prompt to generate or optimize other prompts. The model acts as its own prompt engineer, iteratively refining instructions for better task performance.",
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 69,
+                    term: "Role Prompting",
+                    explanation:
+                        'Assigning the model a specific persona or role (e.g., "You are an expert financial analyst") to influence its response style, depth, and domain focus.',
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 70,
+                    term: "Context Engineering",
+                    explanation:
+                        "The engineering discipline of managing all non-prompt context supplied to an LLM -- including metadata, tool definitions, retrieved documents, conversation history, and system instructions -- to optimize model performance. Recognized as a genuine engineering skill distinct from casual prompting in 2025.",
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 71,
+                    term: "Prompt Injection",
+                    explanation:
+                        "A security attack where malicious instructions are embedded in user input (direct) or external data (indirect) to override the model's system prompt and intended behavior. A fundamental security challenge for LLM applications.",
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 72,
+                    term: "Prompt Leaking",
+                    explanation:
+                        "An attack variant where adversarial prompts trick the model into revealing its system prompt, internal instructions, or confidential context, potentially exposing proprietary logic or sensitive information.",
+                    tag: "Prompting",
+                    section: "Prompt Engineering",
+                    sectionNum: 7,
+                },
+                {
+                    id: 73,
+                    term: "Agentic AI",
+                    explanation:
+                        'AI systems that can autonomously plan, reason, use tools, and take actions to accomplish complex goals with minimal human intervention. "Agentic" was the word of the year in 2025, though definitions vary across the industry.',
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 74,
+                    term: "AI Agent",
+                    explanation:
+                        "An autonomous system built on an LLM that can perceive its environment, make decisions, use tools, and take actions in a loop to accomplish goals. Differs from a chatbot in its ability to act, not just respond.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 75,
+                    term: "Tool Use / Tool Calling",
+                    explanation:
+                        "The capability of an LLM to invoke external tools, APIs, or functions by generating structured output (typically JSON) that instructs an external system to perform an action. The core mechanism that gives agents real-world capabilities.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 76,
+                    term: "Function Calling",
+                    explanation:
+                        'The specific API feature (pioneered by OpenAI) that allows LLMs to output structured function invocations with typed arguments. Often used interchangeably with "tool calling" though function calling is technically the API-level implementation.',
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 77,
+                    term: "MCP (Model Context Protocol)",
+                    explanation:
+                        'An open protocol created by Anthropic (donated to the Linux Foundation in December 2025) that standardizes how AI agents connect to external tools, data sources, and services. Often described as a "USB-C port for AI" -- build the tool interface once, any AI can use it. Crossed 97M monthly SDK downloads by February 2026.',
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 78,
+                    term: "A2A (Agent-to-Agent Protocol)",
+                    explanation:
+                        'An open protocol created by Google (donated to the Linux Foundation in June 2025) that standardizes how AI agents discover, communicate, and collaborate with each other regardless of their underlying framework. Described as "HTTP for AI agents."',
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 79,
+                    term: "AGENTS.md",
+                    explanation:
+                        "A workspace configuration file (alongside SOUL.md and USER.md) used in multi-agent systems to define agent instructions, capabilities, and behavior. Contributed to the Linux Foundation's Agentic AI Foundation alongside MCP.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 80,
+                    term: "Multi-Agent System",
+                    explanation:
+                        "An architecture where multiple specialized AI agents collaborate, with each agent handling different aspects of a task. Inquiries about multi-agent systems surged 1,445% from Q1 2024 to Q2 2025. Patterns include plan-and-execute, routing, and handoffs.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 81,
+                    term: "Agent Orchestration",
+                    explanation:
+                        "The coordination layer that manages how multiple agents interact, share context, delegate tasks, and handle handoffs. Frameworks like LangGraph, AutoGen, and CrewAI provide orchestration patterns.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 82,
+                    term: "Computer Use",
+                    explanation:
+                        "The ability of AI agents to interact with computer interfaces (clicking, typing, scrolling, reading screens) just as a human would, enabling automation of arbitrary software tasks without APIs. Pioneered by Anthropic's Claude Computer Use.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 83,
+                    term: "Browser Use",
+                    explanation:
+                        "A specialized form of computer use focused on web browser automation, where AI agents can navigate websites, fill forms, click buttons, and extract information. Tools like Browser Use optimize for this with 3-5x speed improvements over general computer use.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 84,
+                    term: "AI Sandbox",
+                    explanation:
+                        "An isolated execution environment (typically Docker containers) that safely contains AI agent actions -- including code execution, file operations, browser access, and tool use -- preventing unintended system modifications. Essential for safe agentic AI deployment.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 85,
+                    term: "Structured Output",
+                    explanation:
+                        'The ability of an LLM to generate responses that conform to a predefined schema (e.g., JSON Schema), guaranteeing both valid syntax and schema adherence. An evolution beyond simple "JSON mode" that is critical for reliable tool calling and data extraction.',
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 86,
+                    term: "AI Gateway",
+                    explanation:
+                        "A unified API proxy that sits between applications and multiple AI model providers, offering centralized routing, load balancing, budget controls, fallbacks, caching, and observability. Examples: Vercel AI Gateway, Cloudflare AI Gateway.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 87,
+                    term: "Model Routing",
+                    explanation:
+                        "The practice of dynamically selecting which AI model to use for a given request based on factors like complexity, cost, latency requirements, and task type. Enables cost optimization by routing simple queries to cheaper models.",
+                    tag: "Agentic AI",
+                    section: "Agentic AI & Tool Use",
+                    sectionNum: 8,
+                },
+                {
+                    id: 88,
+                    term: "AI Alignment",
+                    explanation:
+                        "The practice of making AI systems behave in ways that are helpful, harmless, and honest -- ensuring the model's goals and behaviors match human values and intentions. The central challenge of AI safety.",
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 89,
+                    term: "Constitutional AI (CAI)",
+                    explanation:
+                        'An alignment approach (developed by Anthropic) where models are trained to critique and revise their own outputs according to a written set of principles (a "constitution") encoded in natural language. Reduces reliance on human feedback for safety training.',
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 90,
+                    term: "Red Teaming",
+                    explanation:
+                        "Systematic adversarial testing of AI systems by dedicated teams who attempt to elicit harmful, biased, or unintended outputs. Used to discover vulnerabilities before deployment. The 2026 International AI Safety Report notes that pre-deployment testing increasingly fails to reflect real-world behavior.",
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 91,
+                    term: "Guardrails",
+                    explanation:
+                        "Safety mechanisms (input/output filters, content classifiers, rule-based checks) that constrain AI model behavior to prevent harmful, off-topic, or policy-violating outputs. Face trade-offs between safety and usability (overblocking).",
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 92,
+                    term: "Alignment Tax",
+                    explanation:
+                        "The performance cost of safety alignment -- a model optimized for safety may become overly cautious (refusing harmless requests) while a model optimized for capability may compromise safety. Balancing this trade-off is a key research challenge.",
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 93,
+                    term: "Hallucination",
+                    explanation:
+                        "When an LLM generates plausible-sounding but factually incorrect, fabricated, or unsupported information. One of the most significant reliability challenges for AI applications, particularly in high-stakes domains.",
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 94,
+                    term: "AI Watermarking",
+                    explanation:
+                        "Techniques that embed invisible, detectable signals into AI-generated content (text, images, audio, video) to enable identification of synthetic content. Major tech companies are developing standards, though robustness remains challenging.",
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 95,
+                    term: "Deepfake",
+                    explanation:
+                        "AI-generated synthetic media (images, video, audio) that convincingly depicts people saying or doing things they never did. By early 2025, deepfakes accounted for 40% of all biometric fraud incidents.",
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 96,
+                    term: "Explainability / XAI (Explainable AI)",
+                    explanation:
+                        "The degree to which an AI system's internal decision-making process can be understood and interpreted by humans. Critical for trust, debugging, regulatory compliance, and identifying bias.",
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 97,
+                    term: "Interpretability",
+                    explanation:
+                        "The research field focused on understanding what happens inside neural networks -- what features they detect, how they represent knowledge, and why they produce specific outputs. Related to but distinct from explainability.",
+                    tag: "Safety",
+                    section: "AI Safety & Alignment",
+                    sectionNum: 9,
+                },
+                {
+                    id: 98,
+                    term: "Jailbreaking",
+                    explanation:
+                        'Adversarial techniques that bypass an LLM\'s safety training and guardrails to produce restricted or harmful outputs. Methods range from social engineering ("pretend you are...") to sophisticated multi-step attacks. The line between aligned and adversarial behavior is thinner than most people think.',
+                    tag: "Security",
+                    section: "AI Security & Adversarial Threats",
+                    sectionNum: 10,
+                },
+                {
+                    id: 99,
+                    term: "Data Poisoning",
+                    explanation:
+                        "An attack where corrupted, manipulated, or biased data is inserted into a model's training data, fine-tuning data, or retrieval sources to alter its behavior. In 2025-2026, attacks have expanded to target RAG indexes, tool outputs, and agent memory.",
+                    tag: "Security",
+                    section: "AI Security & Adversarial Threats",
+                    sectionNum: 10,
+                },
+                {
+                    id: 100,
+                    term: "Memory Poisoning",
+                    explanation:
+                        "A 2025-2026 attack vector specific to AI agents with persistent memory. Malicious instructions are planted in an agent's long-term memory via indirect prompt injection, surviving across sessions and executing days or weeks later when triggered.",
+                    tag: "Security",
+                    section: "AI Security & Adversarial Threats",
+                    sectionNum: 10,
+                },
+                {
+                    id: 101,
+                    term: "Indirect Prompt Injection",
+                    explanation:
+                        "An attack where malicious instructions are embedded in external data sources (documents, emails, websites) that the AI processes, causing it to execute unintended actions. More dangerous than direct prompt injection because the user may be unaware.",
+                    tag: "Security",
+                    section: "AI Security & Adversarial Threats",
+                    sectionNum: 10,
+                },
+                {
+                    id: 102,
+                    term: "AI Detection",
+                    explanation:
+                        "Tools and techniques for identifying AI-generated content (text, images, audio). An ongoing arms race as generative models improve just as quickly as detection methods.",
+                    tag: "Security",
+                    section: "AI Security & Adversarial Threats",
+                    sectionNum: 10,
+                },
+                {
+                    id: 103,
+                    term: "Benchmark Contamination",
+                    explanation:
+                        "When a model's training data inadvertently (or deliberately) includes data from evaluation benchmarks, inflating reported performance scores and giving misleading impressions of actual capability.",
+                    tag: "Security",
+                    section: "AI Security & Adversarial Threats",
+                    sectionNum: 10,
+                },
+                {
+                    id: 104,
+                    term: "EU AI Act",
+                    explanation:
+                        "The world's first comprehensive AI regulation, entered into force August 2024. Classifies AI systems by risk level (unacceptable, high, limited, minimal). Full application in August 2026, with penalties up to 35M EUR or 7% of global turnover.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 105,
+                    term: "AI Governance",
+                    explanation:
+                        "The frameworks, policies, processes, and controls organizations put in place to manage AI systems responsibly -- covering risk, ethics, compliance, and accountability. Despite 90% of enterprises using AI, only 18% have fully implemented governance frameworks as of 2025.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 106,
+                    term: "Responsible AI",
+                    explanation:
+                        "A set of principles and practices ensuring AI systems are developed and deployed ethically, including fairness, transparency, accountability, privacy, and safety.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 107,
+                    term: "AI Bias",
+                    explanation:
+                        "Systematic errors in AI outputs that reflect and often amplify societal prejudices present in training data, leading to unfair treatment of certain groups. Requires regular bias testing throughout the AI lifecycle.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 108,
+                    term: "Fairness",
+                    explanation:
+                        "The principle that AI systems should produce equitable outcomes across different demographic groups. Requires establishing context-appropriate fairness definitions and implementing regular testing.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 109,
+                    term: "Transparency",
+                    explanation:
+                        "The principle that AI systems should be open about their capabilities, limitations, and decision-making processes. The EU AI Act introduces specific disclosure obligations to preserve trust.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 110,
+                    term: "Accountability",
+                    explanation:
+                        "The principle that there should be clear responsibility for AI system outcomes, including mechanisms for redress when AI causes harm.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 111,
+                    term: "AI Literacy",
+                    explanation:
+                        "The knowledge and skills needed to understand, use, and critically evaluate AI systems. The EU AI Act mandates AI literacy obligations for deployers of AI systems, applicable from February 2025.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 112,
+                    term: "ISO/IEC 42001",
+                    explanation:
+                        "The international standard providing a certifiable framework for AI Management Systems, establishing requirements for responsible AI governance within organizations.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 113,
+                    term: "NIST AI RMF (AI Risk Management Framework)",
+                    explanation:
+                        "The U.S. National Institute of Standards and Technology's framework for managing AI risks, organized around four functions: Govern, Map, Measure, and Manage.",
+                    tag: "Governance",
+                    section: "AI Governance, Risk & Compliance",
+                    sectionNum: 11,
+                },
+                {
+                    id: 114,
+                    term: "Generative AI (GenAI)",
+                    explanation:
+                        "AI systems that create new content -- text, images, audio, video, code, 3D models -- rather than just analyzing or classifying existing data. The category encompasses LLMs, diffusion models, and other generative architectures.",
+                    tag: "Generative AI",
+                    section: "Generative AI & Multimodal",
+                    sectionNum: 12,
+                },
+                {
+                    id: 115,
+                    term: "Multimodal AI",
+                    explanation:
+                        "AI systems that can process, understand, and generate content across multiple data types (modalities) -- text, images, audio, video -- within a single unified model. 2025 saw multimodal supremacy become a major battleground.",
+                    tag: "Generative AI",
+                    section: "Generative AI & Multimodal",
+                    sectionNum: 12,
+                },
+                {
+                    id: 116,
+                    term: "Text-to-Image",
+                    explanation:
+                        "The capability of generating images from natural language descriptions. Powered by diffusion models (DALL-E 3, Midjourney, Stable Diffusion) that learned to associate textual descriptions with visual features.",
+                    tag: "Generative AI",
+                    section: "Generative AI & Multimodal",
+                    sectionNum: 12,
+                },
+                {
+                    id: 117,
+                    term: "Text-to-Video",
+                    explanation:
+                        "AI generation of video content from text prompts. A rapidly advancing frontier with models like Sora (OpenAI), Runway Gen-3, and Kling producing increasingly realistic results.",
+                    tag: "Generative AI",
+                    section: "Generative AI & Multimodal",
+                    sectionNum: 12,
+                },
+                {
+                    id: 118,
+                    term: "Text-to-Speech (TTS)",
+                    explanation:
+                        "AI systems that convert written text into natural-sounding spoken audio, with modern models producing nearly indistinguishable-from-human speech with emotional range and multiple voice styles.",
+                    tag: "Generative AI",
+                    section: "Generative AI & Multimodal",
+                    sectionNum: 12,
+                },
+                {
+                    id: 119,
+                    term: "Speech-to-Text (STT) / ASR",
+                    explanation:
+                        "Automatic speech recognition systems that transcribe spoken audio into text. Modern models like Whisper handle multiple languages, accents, and noisy environments with high accuracy.",
+                    tag: "Generative AI",
+                    section: "Generative AI & Multimodal",
+                    sectionNum: 12,
+                },
+                {
+                    id: 120,
+                    term: "Image-to-Text",
+                    explanation:
+                        "AI systems that generate textual descriptions, captions, or structured data from images. Includes OCR, image captioning, visual question answering, and document understanding.",
+                    tag: "Generative AI",
+                    section: "Generative AI & Multimodal",
+                    sectionNum: 12,
+                },
+                {
+                    id: 121,
+                    term: "Latent Space",
+                    explanation:
+                        "The compressed, abstract representation space that generative models (VAEs, diffusion models) learn internally. Manipulating points in latent space allows controlled generation, interpolation between concepts, and style transfer.",
+                    tag: "Generative AI",
+                    section: "Generative AI & Multimodal",
+                    sectionNum: 12,
+                },
+                {
+                    id: 122,
+                    term: "Inference",
+                    explanation:
+                        "The process of using a trained model to generate predictions or outputs from new inputs. Distinct from training. Inference workloads are projected to account for two-thirds of all AI compute by 2026.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 123,
+                    term: "Training Compute",
+                    explanation:
+                        "The computational resources (measured in FLOPs) required to train a model. Frontier models now require 10^26+ FLOPs. Training costs remain high but are a one-time investment per model version.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 124,
+                    term: "GPU (Graphics Processing Unit)",
+                    explanation:
+                        "The primary hardware for AI training and inference. NVIDIA's A100 and H100 GPUs dominate the market. GPUs excel at parallel matrix operations fundamental to neural networks.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 125,
+                    term: "TPU (Tensor Processing Unit)",
+                    explanation:
+                        "Google's custom AI accelerator, designed specifically for tensor operations in neural networks. Optimized for large-batch workloads but less suited for low-latency single-request inference.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 126,
+                    term: "NPU (Neural Processing Unit)",
+                    explanation:
+                        "Purpose-built AI accelerators designed for edge devices (phones, laptops, IoT) with stringent power budgets. Increasingly found in consumer hardware for on-device AI. Uses architectures mimicking biological neural networks.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 127,
+                    term: "Edge AI",
+                    explanation:
+                        "Running AI models directly on edge devices (phones, sensors, embedded systems) rather than in the cloud, enabling lower latency, better privacy, and offline operation. Enabled by model compression and NPUs.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 128,
+                    term: "Model Serving",
+                    explanation:
+                        "The infrastructure and systems for deploying trained models to handle real-time inference requests at scale. Involves load balancing, batching, caching, scaling, and monitoring. Frameworks: vLLM, TensorRT-LLM, Triton.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 129,
+                    term: "Quantization",
+                    explanation:
+                        "Reducing the numerical precision of model weights and activations (e.g., from 32-bit floating point to 8-bit or 4-bit integers) to shrink model size and accelerate inference. Achieves ~75% size reduction with less than 1% accuracy loss.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 130,
+                    term: "Pruning",
+                    explanation:
+                        "Removing unnecessary weights, neurons, or entire layers from a neural network to reduce its size and computational requirements while maintaining acceptable performance. Can be combined with quantization and distillation.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 131,
+                    term: "Model Compression",
+                    explanation:
+                        "The umbrella term for techniques (quantization, pruning, distillation, weight sharing) that reduce model size and computational requirements for more efficient deployment. Can reduce infrastructure needs by up to 90%.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 132,
+                    term: "Federated Learning",
+                    explanation:
+                        "A distributed training approach where models are trained across multiple decentralized devices or servers holding local data, without exchanging raw data. Preserves data privacy by only sharing model updates, not the underlying data.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 133,
+                    term: "AIOps",
+                    explanation:
+                        "The practice of using AI, machine learning, and big data analytics to automate and improve IT operations -- including monitoring, incident detection, root cause analysis, and capacity planning.",
+                    tag: "Infrastructure",
+                    section: "AI Infrastructure & Deployment",
+                    sectionNum: 13,
+                },
+                {
+                    id: 134,
+                    term: "Speculative Decoding",
+                    explanation:
+                        'An inference acceleration technique where a smaller, faster "draft" model generates multiple candidate tokens in parallel, which the larger "verifier" model then checks and accepts or rejects. Can speed up inference 2-3x with no quality loss.',
+                    tag: "Optimization",
+                    section: "Inference Optimization",
+                    sectionNum: 14,
+                },
+                {
+                    id: 135,
+                    term: "Flash Attention",
+                    explanation:
+                        "A memory-efficient attention algorithm that reduces the memory footprint and improves the speed of attention computation by tiling the attention matrix and avoiding materializing the full attention matrix in GPU memory.",
+                    tag: "Optimization",
+                    section: "Inference Optimization",
+                    sectionNum: 14,
+                },
+                {
+                    id: 136,
+                    term: "Sparse Attention",
+                    explanation:
+                        "Attention mechanisms that only attend to a subset of tokens rather than all tokens, breaking the quadratic computational cost of full attention. Approaches include sliding window, block-sparse, and content-dependent sparsity.",
+                    tag: "Optimization",
+                    section: "Inference Optimization",
+                    sectionNum: 14,
+                },
+                {
+                    id: 137,
+                    term: "Paged Attention",
+                    explanation:
+                        "An attention management technique (introduced by vLLM) inspired by OS virtual memory paging, which dynamically allocates GPU memory for KV cache in non-contiguous blocks, dramatically improving memory utilization and throughput for serving.",
+                    tag: "Optimization",
+                    section: "Inference Optimization",
+                    sectionNum: 14,
+                },
+                {
+                    id: 138,
+                    term: "Continuous Batching",
+                    explanation:
+                        "A serving optimization where new inference requests are added to running batches dynamically (rather than waiting for fixed batches to complete), maximizing GPU utilization and reducing wait times.",
+                    tag: "Optimization",
+                    section: "Inference Optimization",
+                    sectionNum: 14,
+                },
+                {
+                    id: 139,
+                    term: "Test-Time Compute / Inference-Time Scaling",
+                    explanation:
+                        "The paradigm of improving model performance by spending more compute during inference (e.g., longer chain-of-thought reasoning, multiple samples, verification loops) rather than only during training. Shown to follow scaling laws analogous to training compute.",
+                    tag: "Optimization",
+                    section: "Inference Optimization",
+                    sectionNum: 14,
+                },
+                {
+                    id: 140,
+                    term: "Constrained Decoding",
+                    explanation:
+                        "A technique that restricts which tokens the model can generate at each step based on a predefined schema or grammar, ensuring outputs conform to required formats (JSON, XML, code syntax) without post-processing.",
+                    tag: "Optimization",
+                    section: "Inference Optimization",
+                    sectionNum: 14,
+                },
+                {
+                    id: 141,
+                    term: "Vibe Coding",
+                    explanation:
+                        "A term coined by Andrej Karpathy in February 2025 describing a radically hands-off development approach where programmers guide AI through natural language conversation, focusing on high-level intent while trusting AI to handle implementation details. Collins Dictionary's word of the year 2025.",
+                    tag: "AI Coding",
+                    section: "AI Coding & Development",
+                    sectionNum: 15,
+                },
+                {
+                    id: 142,
+                    term: "AI Code Generation",
+                    explanation:
+                        "The use of LLMs to automatically write, complete, refactor, debug, and document source code from natural language descriptions or partial code context. 65% of developers use AI coding tools at least weekly (Stack Overflow 2025 Survey).",
+                    tag: "AI Coding",
+                    section: "AI Coding & Development",
+                    sectionNum: 15,
+                },
+                {
+                    id: 143,
+                    term: "AI Coding Assistant / Copilot",
+                    explanation:
+                        "IDE-integrated tools that provide real-time code suggestions, completions, explanations, and generation as developers write code. Examples: GitHub Copilot, Cursor, JetBrains AI, Tabnine, Amazon Q, Gemini Code Assist.",
+                    tag: "AI Coding",
+                    section: "AI Coding & Development",
+                    sectionNum: 15,
+                },
+                {
+                    id: 144,
+                    term: "Agentic Coding CLI",
+                    explanation:
+                        "Command-line AI coding tools that can autonomously plan and execute multi-step coding tasks across entire repositories -- editing files, running tests, debugging, and iterating. Represents the evolution beyond IDE chatbots. Examples: Claude Code, Aider, Goose.",
+                    tag: "AI Coding",
+                    section: "AI Coding & Development",
+                    sectionNum: 15,
+                },
+                {
+                    id: 145,
+                    term: "AI Coding Agent",
+                    explanation:
+                        "Autonomous AI systems that can take a high-level specification and independently plan, write, test, debug, and deploy code with minimal human guidance. Examples: Devin, Cursor Agent, Claude Code.",
+                    tag: "AI Coding",
+                    section: "AI Coding & Development",
+                    sectionNum: 15,
+                },
+                {
+                    id: 146,
+                    term: "Repository Intelligence",
+                    explanation:
+                        "AI that understands not just individual lines of code but the relationships, patterns, architecture, and history across an entire codebase, enabling more contextual and accurate code suggestions and refactoring.",
+                    tag: "AI Coding",
+                    section: "AI Coding & Development",
+                    sectionNum: 15,
+                },
+                {
+                    id: 147,
+                    term: "TTFT (Time to First Token)",
+                    explanation:
+                        "The latency from when an inference request is submitted until the first output token is generated. Includes queuing, prompt processing (prefill), and network latency. A sub-500ms TTFT is crucial for real-time conversational AI.",
+                    tag: "Metrics",
+                    section: "Performance Metrics & Evaluation",
+                    sectionNum: 16,
+                },
+                {
+                    id: 148,
+                    term: "TPS (Tokens Per Second)",
+                    explanation:
+                        "The rate at which a model generates output tokens, measuring generation speed. Higher TPS means faster response completion. Also called inter-token throughput.",
+                    tag: "Metrics",
+                    section: "Performance Metrics & Evaluation",
+                    sectionNum: 16,
+                },
+                {
+                    id: 149,
+                    term: "Throughput",
+                    explanation:
+                        "The total number of requests or tokens a serving system can process per unit of time. Distinct from latency -- systems optimize for one or the other depending on use case (batch processing vs. real-time).",
+                    tag: "Metrics",
+                    section: "Performance Metrics & Evaluation",
+                    sectionNum: 16,
+                },
+                {
+                    id: 150,
+                    term: "Latency",
+                    explanation:
+                        "The time delay between sending a request and receiving the complete response. Critical for real-time applications. Inference costs have dropped from $20 to $0.07 per million tokens (Stanford AI Index 2025).",
+                    tag: "Metrics",
+                    section: "Performance Metrics & Evaluation",
+                    sectionNum: 16,
+                },
+                {
+                    id: 151,
+                    term: "Perplexity",
+                    explanation:
+                        'A standard metric for evaluating language models, measuring how well the model predicts a sample of text. Lower perplexity indicates the model is less "surprised" by the text and better at modeling the language.',
+                    tag: "Metrics",
+                    section: "Performance Metrics & Evaluation",
+                    sectionNum: 16,
+                },
+                {
+                    id: 152,
+                    term: "Benchmark",
+                    explanation:
+                        "A standardized test or dataset used to evaluate and compare AI model capabilities across specific tasks (e.g., MMLU for knowledge, HumanEval for coding, GSM8K for math). Subject to contamination risks and gaming.",
+                    tag: "Metrics",
+                    section: "Performance Metrics & Evaluation",
+                    sectionNum: 16,
+                },
+                {
+                    id: 153,
+                    term: "AI Slop",
+                    explanation:
+                        'Low-quality, mass-produced content generated by AI, often containing errors and not requested by the user. Used broadly as a suffix to describe anything lacking substance: "work slop," "friend slop." Popularized throughout 2025.',
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 154,
+                    term: "Model Collapse",
+                    explanation:
+                        "A degenerative process where AI models trained on AI-generated data progressively lose diversity and accuracy -- rare events vanish, outputs drift toward bland averages with weird outliers. A growing risk as synthetic content dominates the web.",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 155,
+                    term: "Context Engineering",
+                    explanation:
+                        "The emerging software engineering discipline focused on systematically managing all context supplied to LLMs -- prompts, retrieved documents, tool definitions, metadata, conversation history -- to optimize model performance in production. Recognized as distinct from casual prompting in 2025.",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 156,
+                    term: "World Model",
+                    explanation:
+                        "A simulated internal representation of an environment that enables AI agents to predict outcomes of actions and plan before acting. Showing potential in robotics, reinforcement learning, and generative video (e.g., Sora may use world model-like reasoning).",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 157,
+                    term: "JEPA (Joint-Embedding Predictive Architecture)",
+                    explanation:
+                        "An architecture (proposed by Yann LeCun) that predicts abstract representations of inputs rather than pixel-level reconstructions, potentially enabling more robust and efficient learning. V-JEPA extends this to video understanding.",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 158,
+                    term: "Objective-Validation Protocol",
+                    explanation:
+                        "An emerging development paradigm beyond vibe coding, where users define goals and validation criteria while collections of agents autonomously execute implementation, requesting human approval only at critical checkpoints.",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 159,
+                    term: "AI Recommendation Poisoning",
+                    explanation:
+                        "A 2025-2026 attack vector identified by Microsoft where adversaries manipulate AI recommendation systems' underlying data to influence outputs for profit, brand manipulation, or disinformation.",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 160,
+                    term: "Long Context Models",
+                    explanation:
+                        "Models designed to handle extremely long input sequences (100K to 1M+ tokens) in a single pass, enabling processing of entire codebases, books, or document collections without chunking. Examples: Claude (200K), Gemini (1M+), Jamba (256K).",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 161,
+                    term: "Emergent Behavior",
+                    explanation:
+                        "Unpredictable capabilities that arise in large AI models that were not explicitly trained for, appearing only above certain scale thresholds. Examples include in-context learning, chain-of-thought reasoning, and multilingual abilities not present in smaller models.",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 162,
+                    term: "Agentic AI Foundation (AAIF)",
+                    explanation:
+                        "A Linux Foundation project (formed December 2025) to steward open agentic AI standards and projects, including MCP, Goose, and AGENTS.md. Backed by major AI companies for cross-platform interoperability.",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 163,
+                    term: "Quantum AI",
+                    explanation:
+                        "The nascent field combining quantum computing with AI/ML, exploring quantum speedups for optimization, sampling, and training. Still largely experimental but with growing research investment and early quantum-assisted optimization experiments.",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 164,
+                    term: "Scientific AI / AI for Science",
+                    explanation:
+                        "The use of AI to accelerate scientific discovery -- generating hypotheses, designing experiments, analyzing results, and collaborating with human researchers across physics, chemistry, biology, and materials science. Expected to be a major 2026 trend.",
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 165,
+                    term: "Efficiency Frontier",
+                    explanation:
+                        'A 2026 concept describing models that achieve flagship-level reasoning with streamlined architectures, prioritizing performance-per-compute over raw scale. Represents the shift from "bigger is better" to "smarter is better."',
+                    tag: "Emerging",
+                    section: "Emerging & 2025-2026 Terminology",
+                    sectionNum: 17,
+                },
+                {
+                    id: 166,
+                    term: "SDLC (Software Development Life Cycle)",
+                    explanation:
+                        "The structured process for planning, creating, testing, deploying, and maintaining software. Traditional phases include requirements, design, implementation, testing, deployment, and maintenance. AI is now being embedded at every stage.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 167,
+                    term: "AI-DLC (AI Development Life Cycle)",
+                    explanation:
+                        "An evolution of the traditional SDLC where AI tools are embedded at every stage of software delivery -- from requirements analysis and code generation to testing, code review, and deployment. Represents a shift from AI as a bolt-on tool to AI as an integral part of the workflow.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 168,
+                    term: "AI-Assisted Development",
+                    explanation:
+                        "A development approach where AI tools augment human developers throughout the coding process -- suggesting code, generating tests, reviewing merge requests, and explaining codebases -- while humans retain full decision-making authority and accountability.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 169,
+                    term: "AI Engineering Playbook",
+                    explanation:
+                        "A documented, living guide that codifies how an engineering team uses AI across their SDLC. Includes prompt templates per stage, verification checklists, guardrails, dos and don'ts, and real examples. Designed to be iterated on as the team learns.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 170,
+                    term: "Verification Checklist",
+                    explanation:
+                        "A structured list of checks that a developer must perform after accepting AI-generated output before committing it. Covers correctness, security, adherence to coding standards, test coverage, and domain-specific constraints. A human accountability mechanism.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 171,
+                    term: "Security Guardrails (AI Context)",
+                    explanation:
+                        "Non-negotiable rules defining what data, code, and context must never be sent to AI systems. In fintech, this typically includes PII, payment processing logic, secrets, API keys, and authentication tokens. Distinct from model-level guardrails.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 172,
+                    term: "AI Touchpoint",
+                    explanation:
+                        "A specific point in the development workflow where AI tools are systematically applied -- e.g., ticket kick-off (requirements generation), implementation (code assistance), pre-commit (spec generation), merge request (automated review). Mapping AI touchpoints to workflow stages is a key adoption practice.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 173,
+                    term: "AI-Assisted MR / PR",
+                    explanation:
+                        "A merge request (or pull request) where AI tools contributed to any part of the work -- code generation, test writing, review comments, or documentation. Typically tracked with a label (e.g., `ai-assisted`) for adoption metrics and compliance.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 174,
+                    term: "Spec Agent",
+                    explanation:
+                        "A domain-specific AI agent that takes a class, module, or function as input and generates a test specification (e.g., RSpec, Vitest) with meaningful contexts, edge cases, and assertions. The generated specs serve as a starting point that developers review and refine.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 175,
+                    term: "PR Review Agent",
+                    explanation:
+                        "An AI agent that analyses merge request diffs and produces structured review feedback covering code style, test coverage gaps, security concerns, and potential bugs. Can run as a CI step on every MR for automated first-pass review.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 176,
+                    term: "Requirements Agent",
+                    explanation:
+                        "An AI agent that takes a ticket description (e.g., from Jira) and generates structured acceptance criteria in Given/When/Then format, helping bridge the gap between product intent and engineering specification.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 177,
+                    term: "Codebase Explainer Agent",
+                    explanation:
+                        "An AI agent that answers natural-language questions about a codebase by reading source code and structured documentation (like `AI_CONTEXT.md`). Designed to break knowledge silos by enabling any developer to understand any part of the system without finding the domain expert.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 178,
+                    term: "Component Spec Agent",
+                    explanation:
+                        "The frontend equivalent of a Spec Agent -- takes a component name or design description and generates Storybook stories with meaningful variants and interaction tests (play functions). Enables story-first development.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 179,
+                    term: "Story-First Development",
+                    explanation:
+                        "A frontend development practice where Storybook stories (component specifications with variants and interaction tests) are generated before writing implementation code. AI agents generate the stories from design specs or Jira tickets, and the stories become the living spec.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 180,
+                    term: "Prompt Library",
+                    explanation:
+                        "A curated, shared collection of reusable prompts optimised for specific development tasks within a team's codebase and workflow. Evolves through team usage and is typically maintained per squad or domain.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 181,
+                    term: "Hard Problems Session",
+                    explanation:
+                        "A structured team meeting where developers bring AI prompts that didn't work, outputs they couldn't trust, or integration challenges they couldn't solve alone. The group problem-solves together, improving collective AI fluency and feeding learnings back into the playbook.",
+                    tag: "AI-DLC",
+                    section:
+                        "AI in the Software Development Lifecycle (AI-DLC)",
+                    sectionNum: 18,
+                },
+                {
+                    id: 182,
+                    term: "AI Code Attribution",
+                    explanation:
+                        "The practice of tracking which lines of code in a repository were written by AI vs. humans, including metadata about which model was used, who authored the prompt, and the conversation context. Essential for audit trails in regulated industries.",
+                    tag: "Attribution",
+                    section: "AI Code Attribution & Compliance",
+                    sectionNum: 19,
+                },
+                {
+                    id: 183,
+                    term: "git-ai",
+                    explanation:
+                        "A tool that configures git hooks to mark AI contributions as AI-generated at the line level, preserving attribution across merges, rebases, cherry-picks, squashes, and resets. Works offline with no background daemons -- agents explicitly mark inserted hunks, avoiding heuristic detection.",
+                    tag: "Attribution",
+                    section: "AI Code Attribution & Compliance",
+                    sectionNum: 19,
+                },
+                {
+                    id: 184,
+                    term: "Agent Trace",
+                    explanation:
+                        "An open specification released by Cursor (January 2026) that records AI and human contributions in a vendor-neutral JSON format within version-controlled codebases. Compatible with git-ai and designed to prevent vendor lock-in for AI code attribution.",
+                    tag: "Attribution",
+                    section: "AI Code Attribution & Compliance",
+                    sectionNum: 19,
+                },
+                {
+                    id: 185,
+                    term: "AI Code Attribution Layers",
+                    explanation:
+                        "A four-layer model for tracking AI-generated code: (1) git-level attribution (line-by-line), (2) MR-level signal (labels and checklists), (3) CI pipeline gates (automated compliance checks), and (4) dashboard and compliance reporting (aggregated metrics for audit).",
+                    tag: "Attribution",
+                    section: "AI Code Attribution & Compliance",
+                    sectionNum: 19,
+                },
+                {
+                    id: 186,
+                    term: "Human-Review Required Flag",
+                    explanation:
+                        "A CI/CD gate that flags merge requests where AI-generated code touches critical paths (e.g., payment processing, authentication, database migrations, PII handling) and requires explicit human sign-off before merge.",
+                    tag: "Attribution",
+                    section: "AI Code Attribution & Compliance",
+                    sectionNum: 19,
+                },
+                {
+                    id: 187,
+                    term: "AI Compliance Dashboard",
+                    explanation:
+                        "A reporting interface that aggregates AI code attribution data across teams -- showing percentage of AI-generated lines per squad, AI-assisted MR rate over time, and which guardrail-protected files have had AI touches. The audit trail for regulators and compliance officers.",
+                    tag: "Attribution",
+                    section: "AI Code Attribution & Compliance",
+                    sectionNum: 19,
+                },
+                {
+                    id: 188,
+                    term: "Co-Authored-By (AI)",
+                    explanation:
+                        "A git commit convention (e.g., `Co-Authored-By: Claude <noreply@anthropic.com>`) used to signal that an AI contributed to the commit. A lightweight, human-readable attribution mechanism that works with existing git tooling.",
+                    tag: "Attribution",
+                    section: "AI Code Attribution & Compliance",
+                    sectionNum: 19,
+                },
+                {
+                    id: 189,
+                    term: "AI Ambassador",
+                    explanation:
+                        "A designated team member (typically one per squad) who leads AI adoption within their group -- facilitating labs, unblocking setup issues, maintaining the squad prompt library, onboarding new joiners, and running regular AI retrospectives. A peer leader, not a manager.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 190,
+                    term: "AI Ambassador Charter",
+                    explanation:
+                        "A formal agreement defining the responsibilities, cadence, and authority of AI ambassadors within an organisation. Typically includes monthly retros, prompt library maintenance, new-joiner onboarding, and a mechanism for proposing new agents or playbook updates.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 191,
+                    term: "AI_CONTEXT.md",
+                    explanation:
+                        "A structured documentation file placed at the root of each engine, service, or module in a codebase. Describes purpose, public API, integration contracts, data models, events, dependencies, and known gotchas in a machine-readable format. Serves as the primary input to Codebase Explainer Agents and as a living contract between teams.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 192,
+                    term: "COMPONENT_CONTEXT.md",
+                    explanation:
+                        "The frontend equivalent of `AI_CONTEXT.md` -- documents a component's props, variants, events, design tokens, accessibility notes, integration examples, and known limitations. Primary input to Component Explainer Agents.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 193,
+                    term: "Cross-Squad Knowledge Sharing",
+                    explanation:
+                        "The practice of using AI agents (particularly Codebase Explainer Agents) and structured documentation (AI_CONTEXT.md) to enable developers from one team to understand and safely contribute to another team's domain without needing synchronous knowledge transfer from domain experts.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 194,
+                    term: "AI Upskilling Program",
+                    explanation:
+                        "A structured, time-boxed training initiative (typically 1-2 weeks) to build AI fluency across an engineering organisation. Typically follows a train-the-trainer model: a pilot cohort builds the toolkit and playbook, then ambassadors scale it to the full team.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 195,
+                    term: "Kanban + AI-DLC",
+                    explanation:
+                        "A delivery methodology combining continuous-flow Kanban (replacing batch-oriented Scrum sprints) with AI-embedded development practices. AI tools reduce cycle time and enable smaller, more frequent deliveries, making Kanban's continuous flow practical for complex systems.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 196,
+                    term: "AI-DLC Metrics Baseline",
+                    explanation:
+                        "The initial measurement of key development metrics (cycle time, MR review time, test generation speed, AI-assisted MR rate, prompt reuse rate) before AI tool adoption, used as a benchmark to quantify productivity impact over time.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 197,
+                    term: "AI-Assisted Pairing",
+                    explanation:
+                        "A development practice where an AI ambassador or experienced practitioner pairs with another developer, teaching them how to use AI tools effectively on real work. Combines traditional pair programming with AI tool coaching.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 198,
+                    term: "Extreme Delivery",
+                    explanation:
+                        "A software delivery philosophy focused on minimising the time between idea and production. Combines continuous deployment, Kanban flow, automated testing, and AI-assisted development to achieve rapid, sustainable delivery cycles.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 199,
+                    term: "Agent Inventory",
+                    explanation:
+                        "A catalogued list of AI agents available to a development team, with each agent's purpose, inputs, outputs, and usage guidelines documented. Versioned and maintained alongside the engineering playbook.",
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 200,
+                    term: "Glazing",
+                    explanation:
+                        'AI-generated text that is excessively complimentary, sycophantic, or lacking critical substance. Originally internet slang, adopted in 2025 to describe AI outputs that agree with everything without adding value. Recognised alongside "slop" as a characteristic AI failure mode.',
+                    tag: "Team Practices",
+                    section: "AI-Assisted Team Practices",
+                    sectionNum: 20,
+                },
+                {
+                    id: 201,
+                    term: "Claude Code",
+                    explanation:
+                        "Anthropic's terminal-based AI coding agent (launched February 2025). Reads your codebase, edits files, runs shell commands, and executes multi-step workflows directly from the command line. Available as CLI, desktop app, web app (claude.ai/code), and IDE extensions (VS Code, JetBrains).",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 202,
+                    term: "CLAUDE.md",
+                    explanation:
+                        "A markdown file placed at a project root (or in `~/.claude/`) that provides persistent instructions to Claude Code across sessions. Functions like a README for the AI -- defining coding standards, architecture notes, and behavioral rules. Supports project-level, user-level, and directory-level scoping.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 203,
+                    term: "Skills (SKILL.md)",
+                    explanation:
+                        "Markdown-based guides that teach Claude Code how to handle specific tasks. Instead of pasting the same prompt repeatedly, you write a skill once and invoke it via a slash command (e.g., `/review-component`). Published as an open standard at agentskills.io (December 2025).",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 204,
+                    term: "Slash Commands",
+                    explanation:
+                        "User-triggered, repeatable prompt shortcuts in Claude Code. Custom commands (e.g., `/fix-lint`, `/write-test`) expand into full prompts. Serve as quick entry points to common workflows without retyping instructions.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 205,
+                    term: "Hooks",
+                    explanation:
+                        "User-defined shell commands that execute automatically at specific lifecycle events in Claude Code -- similar to Git hooks, but for the AI agent. Events include `PreToolUse`, `PostToolUse`, `Stop`, `SubagentStop`, `Notification`, `SessionStart`, `UserPromptSubmit`, and `PermissionRequest`. Example uses: auto-lint every file Claude writes, block dangerous commands, send Slack notifications when Claude finishes.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 206,
+                    term: "Harness",
+                    explanation:
+                        "The execution runtime and coordination layer that wraps the Claude model in Claude Code. It manages the agent loop, tool dispatch, permission checks, context window, hooks, and session state. When you configure hooks or permissions, you are configuring the harness, not the model itself.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 207,
+                    term: "Subagents",
+                    explanation:
+                        "Specialised, ephemeral Claude instances that Claude Code spawns to handle specific tasks in isolation. Each subagent gets a fresh context window, works on one task, and returns a summary to the parent agent. Types include Explore (codebase search), Plan (architecture), and general-purpose agents.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 208,
+                    term: "Agent Teams",
+                    explanation:
+                        "Multiple independent Claude Code sessions that coordinate, message each other, and divide work in parallel (launched February 2026). Unlike subagents (isolated workers reporting to a parent), Agent Teams are a collaborative squad where agents communicate directly.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 209,
+                    term: "Plan Mode",
+                    explanation:
+                        "A permission mode in Claude Code that restricts the agent to read-only operations. Claude can analyse code, explore the codebase, and create plans, but cannot make any modifications or execute tools. Activated via Shift+Tab cycling.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 210,
+                    term: "Auto-Accept Mode",
+                    explanation:
+                        "A permission mode that eliminates confirmation prompts for file edits, enabling uninterrupted execution. The developer can still observe and intervene. Activated via Shift+Tab.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 211,
+                    term: "Normal Mode",
+                    explanation:
+                        "The default Claude Code permission mode that prompts for every potentially dangerous operation (file writes, shell commands, etc.).",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 212,
+                    term: "Bypass Mode (YOLO Mode)",
+                    explanation:
+                        "The `--dangerously-skip-permissions` flag that skips all permission checks. Claude executes any tool without prompting. Intended only for fully isolated environments (containers, VMs, ephemeral CI runners).",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 213,
+                    term: "Headless Mode (--print / -p)",
+                    explanation:
+                        "Running Claude Code non-interactively by passing `-p` with a prompt. Output is collected at once rather than streamed interactively, making it suitable for CI pipelines, background jobs, and programmatic integration.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 214,
+                    term: "Conversation Compaction (/compact)",
+                    explanation:
+                        "When context approaches capacity (~95% full), Claude Code summarises the conversation history and replaces it with a compressed summary, effectively extending the session indefinitely. Can be triggered manually with `/compact` or happens automatically. Unlike `/clear`, which wipes history, `/compact` preserves context as a summary.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 215,
+                    term: "Extended Thinking",
+                    explanation:
+                        "A mode where Claude produces detailed internal reasoning (thinking blocks) before responding. Thinking blocks are automatically stripped from context on subsequent turns to preserve token capacity. Enables deeper analysis of complex problems.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 216,
+                    term: "Worktree (Git Worktree Strategy)",
+                    explanation:
+                        "Using Git worktrees to isolate parallel Claude Code sessions. Each session operates on a distinct directory/branch, eliminating file conflicts when running multiple agents simultaneously on the same repo.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 217,
+                    term: "Background Agents",
+                    explanation:
+                        "Claude Code instances that run asynchronously without requiring real-time interaction -- triggered from GitHub Issues, CI pipelines, or scheduled tasks. They clone a repo, work on a branch, and push changes when done.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 218,
+                    term: "Claude Agent SDK",
+                    explanation:
+                        'A library (Python and TypeScript) that lets you embed Claude Code\'s agent loop, tools, and context management into your own applications. Formerly "Claude Code SDK", renamed late 2025. Provides built-in file operations, shell commands, web search, MCP integration, hooks, and subagent support.',
+                    tag: "Anthropic",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 219,
+                    term: "Claude Code GitHub Actions",
+                    explanation:
+                        "A GitHub Action built on the Claude Agent SDK that runs Claude Code within CI/CD workflows. Enables automated PR creation, code implementation, and review directly on GitHub's runners.",
+                    tag: "Anthropic",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 220,
+                    term: "Permission Rules",
+                    explanation:
+                        "Claude Code evaluates permission rules in priority order: deny, then ask, then allow. The first matching rule wins, and deny rules always take precedence. Configured in settings or via `/permissions`.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 221,
+                    term: "Allowed Tools (--allowedTools)",
+                    explanation:
+                        "A CLI flag or configuration that pre-approves specific tools so Claude can use them without prompting for permission. Uses permission rule syntax with glob patterns.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 222,
+                    term: "Plugins",
+                    explanation:
+                        "Self-contained directories of components (skills, agents, hooks, MCP servers, LSP servers) that extend Claude Code with custom functionality. Introduced October 2025.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 223,
+                    term: "Context Window",
+                    explanation:
+                        "The maximum number of tokens Claude can consider at once. Claude Opus 4.6 and Sonnet 4.6 have a 1M-token context window (GA March 2026). A ~33,000-token buffer is reserved, leaving roughly 967K usable tokens. When nearing capacity, auto-compaction kicks in.",
+                    tag: "Claude Code",
+                    section: "Claude Code & Agent SDK",
+                    sectionNum: 21,
+                },
+                {
+                    id: 224,
+                    term: "Cursor",
+                    explanation:
+                        "An AI-native IDE built on VS Code with deep Claude and GPT integration. Features include Cursor Tab (inline completion), Composer (multi-file editing), Agent Mode (autonomous coding), codebase indexing, and Background Agents. Acquired features and integrations make it a leading agentic coding tool.",
+                    tag: "Cursor",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 225,
+                    term: "Cursor Tab",
+                    explanation:
+                        "Cursor's predictive code completion engine. Goes beyond next-word suggestions -- it predicts cursor movement and multi-line edits based on recent changes, using a specialised model for speed.",
+                    tag: "Cursor",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 226,
+                    term: "Cursor Composer",
+                    explanation:
+                        "Cursor's coding model designed for building software inside the editor. Targets agentic workflows and large codebases, aiming to complete most turns in under 30 seconds. Introduced with Cursor 2.0 (October 2025).",
+                    tag: "Cursor",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 227,
+                    term: "Cursor Agent Mode",
+                    explanation:
+                        'The autonomous mode in Cursor where you give a high-level goal (e.g., "Build a user registration page") and Cursor determines which files to create/edit, runs commands, and iterates independently. Contrast with Chat Mode (conversational Q&A).',
+                    tag: "Cursor",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 228,
+                    term: ".cursorrules",
+                    explanation:
+                        "A file placed in a project's root directory that gives Cursor standing instructions -- coding styles, preferred libraries, architectural patterns. Keeps the AI's output consistent with team standards. Analogous to CLAUDE.md for Claude Code.",
+                    tag: "Cursor",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 229,
+                    term: "Codebase Indexing",
+                    explanation:
+                        "Computing embeddings (vector representations) for files in a project, enabling semantic search that understands meaning rather than matching exact text. Used by Cursor, Copilot, and others to find relevant context for AI responses. Requires periodic re-indexing.",
+                    tag: "Cross-tool",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 230,
+                    term: "BugBot / Autofix",
+                    explanation:
+                        'Cursor\'s automated PR reviewer. Scans pull requests, catches potential bugs, and leaves comments on GitHub. As of February 2026, graduated to "Autofix" -- when it finds a problem, it spins up a cloud agent, tests a fix, and proposes it directly on the PR. Over 35% of suggestions are merged.',
+                    tag: "Cursor",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 231,
+                    term: "GitHub Copilot",
+                    explanation:
+                        "GitHub/Microsoft's AI coding assistant, deeply embedded in VS Code and JetBrains IDEs. Provides inline completions, chat, and agent mode. The most widely adopted AI coding tool in enterprise settings.",
+                    tag: "GitHub",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 232,
+                    term: "copilot-instructions.md",
+                    explanation:
+                        "A file at `.github/copilot-instructions.md` that VS Code automatically detects and applies to all Copilot chat requests within that workspace. Provides project-specific instructions to Copilot.",
+                    tag: "GitHub Copilot",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 233,
+                    term: "Copilot Coding Agent",
+                    explanation:
+                        "GitHub Copilot's autonomous background agent that works independently to complete tasks assigned via GitHub Issues, PRs, or the Agents tab. Can be assigned work from github.com, GitHub Mobile, and VS Code.",
+                    tag: "GitHub Copilot",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 234,
+                    term: "GitHub Agent HQ",
+                    explanation:
+                        "GitHub's multi-agent hub (February 2026) where users can run Claude and OpenAI Codex agents alongside Copilot. Agents are assignable from issues, pull requests, and a dedicated Agents tab.",
+                    tag: "GitHub",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 235,
+                    term: "Windsurf",
+                    explanation:
+                        "An AI-native IDE developed by Codeium, built on a VS Code foundation. Features Cascade (agentic assistant) and Supercomplete (inline completion). Acquired by Cognition AI (makers of Devin) in December 2025.",
+                    tag: "Windsurf",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 236,
+                    term: "Cascade",
+                    explanation:
+                        "Windsurf's agentic AI assistant with tool calling, voice input, checkpoints, and real-time awareness. Tracks all user actions (edits, commands, history, clipboard, terminal) to infer intent and adapt in real time.",
+                    tag: "Windsurf",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 237,
+                    term: "Supercomplete",
+                    explanation:
+                        "Windsurf's advanced inline completion that predicts developer intent rather than just the next token. Inline and suggestion-based -- you stay in editor flow and accept or reject.",
+                    tag: "Windsurf",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 238,
+                    term: "Aider",
+                    explanation:
+                        "An open-source command-line AI pair programming tool that edits code in your local Git repository. Supports multiple LLM providers. Emphasises Git integration with automatic commits and the ability to review/undo changes.",
+                    tag: "Aider",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 239,
+                    term: "Repository Map",
+                    explanation:
+                        "A condensed map of the entire codebase that Aider builds before each request, showing file names, class definitions, function signatures, and import relationships. Helps the LLM understand project structure.",
+                    tag: "Aider",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 240,
+                    term: "Edit Format (Search/Replace)",
+                    explanation:
+                        "The method Aider uses to let LLMs modify source files. Outputs a SEARCH block with existing code and a REPLACE block with modifications. More token-efficient than sending whole files. Also used by Claude Code's Edit tool.",
+                    tag: "Cross-tool",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 241,
+                    term: "Devin",
+                    explanation:
+                        "An autonomous AI software engineer by Cognition that handles the full development lifecycle -- writing code, creating tests, debugging, and iterating until solutions work. Takes high-level requirements and delivers working software.",
+                    tag: "Cognition",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 242,
+                    term: "Cline",
+                    explanation:
+                        "A fully open-source, local-first VS Code extension that functions as an agentic coding assistant. Can create files, run terminal commands, manage multi-step tasks. Works within your existing VS Code setup.",
+                    tag: "Open source",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 243,
+                    term: "OpenAI Codex CLI",
+                    explanation:
+                        "OpenAI's terminal-based coding agent, competing with Claude Code. Available as a coding agent on GitHub alongside Claude.",
+                    tag: "OpenAI",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 244,
+                    term: "Prompt/Instruction Files",
+                    explanation:
+                        "Project-level configuration files that guide AI behaviour. Examples: `.cursorrules` (Cursor), `CLAUDE.md` (Claude Code), `.github/copilot-instructions.md` (Copilot), `AGENTS.md` (cross-tool). Encode coding standards, architecture decisions, and behavioural rules.",
+                    tag: "Cross-tool",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 245,
+                    term: "Checkpoints",
+                    explanation:
+                        "Snapshots of workspace state that an AI agent creates before making changes, allowing developers to roll back to a known-good state if the agent's modifications go wrong. Used by Windsurf Cascade and other agentic tools.",
+                    tag: "Cross-tool",
+                    section: "Cursor, Copilot & AI Coding Tools",
+                    sectionNum: 22,
+                },
+                {
+                    id: 246,
+                    term: "MCP Host",
+                    explanation:
+                        "The AI-enabled application that integrates and runs the MCP system. The host embeds MCP clients and acts as the user-facing interface. Examples: Claude Desktop, Claude Code, Cursor, VS Code, Raycast.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 247,
+                    term: "MCP Client",
+                    explanation:
+                        "The communication layer within the host application. Receives structured tool definitions from servers and forwards tool calls from the model to the correct server implementations. Each host can run multiple client instances.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 248,
+                    term: "MCP Server",
+                    explanation:
+                        "A lightweight program that exposes specific capabilities (tools, resources, prompts) via MCP primitives. Servers operate independently with focused responsibilities. Examples: a GitHub MCP server, a database MCP server, a browser automation MCP server.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 249,
+                    term: "MCP Tools",
+                    explanation:
+                        'Executable functions that an MCP server exposes for the LLM to invoke. They represent arbitrary code execution (e.g., "create a GitHub PR", "run a database query") and must be treated with appropriate caution. The LLM decides when and how to call them.',
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 250,
+                    term: "MCP Resources",
+                    explanation:
+                        "Structured data or content that MCP servers expose to clients -- textual documents, database entries, file contents, images, system logs, real-time data streams. Unlike tools, resources are data the model reads rather than actions it executes.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 251,
+                    term: "MCP Prompts",
+                    explanation:
+                        "Reusable templates and workflows for LLM-server communication, defined by MCP servers. They provide pre-built interaction patterns that clients can present to users or invoke programmatically.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 252,
+                    term: "MCP Sampling",
+                    explanation:
+                        "A capability that allows MCP servers to request the host's LLM to generate text on the server's behalf, enabling agentic multi-step interactions where servers can reason and make decisions.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 253,
+                    term: "Streamable HTTP (MCP Transport)",
+                    explanation:
+                        "The transport mechanism introduced March 2025, replacing Server-Sent Events (SSE). Unifies bidirectional communication over a single HTTP endpoint (`/mcp`), supports chunked transfer encoding, progressive message delivery, and session resumability via `Mcp-Session-Id`.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 254,
+                    term: "stdio Transport",
+                    explanation:
+                        "The original MCP transport for local communication where the host spawns the MCP server as a subprocess and communicates via standard input/output. Simple but limited to local processes.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 255,
+                    term: "Tool Annotations",
+                    explanation:
+                        "Metadata on MCP tools (introduced March 2025) including `readOnly` and `destructive` flags. They programmatically trigger human-in-the-loop warnings before executing high-stakes actions like database deletions.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 256,
+                    term: "MCP Registry",
+                    explanation:
+                        "A community-driven registry service for discovering and publishing MCP servers. Entered API freeze (v0.1) October 2025. Supports GitHub OAuth authentication and validates namespace ownership.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 257,
+                    term: "Remote MCP Servers",
+                    explanation:
+                        "MCP servers hosted on remote infrastructure rather than running locally. Use Streamable HTTP transport and OAuth 2.1 for authentication. The June 2025 spec update separated the MCP server from the authorisation server.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 258,
+                    term: "MCP OAuth / Authorisation",
+                    explanation:
+                        "The MCP authorisation specification standardises OAuth 2.1 flows for HTTP-based transports. Includes Dynamic Client Registration (RFC 7591), Resource Indicators to prevent token misuse, and enterprise-managed authorisation extensions.",
+                    tag: "MCP",
+                    section: "MCP Ecosystem (Deep Dive)",
+                    sectionNum: 23,
+                },
+                {
+                    id: 259,
+                    term: "Agent Loop",
+                    explanation:
+                        "The core execution cycle of an agentic coding tool: receive task, reason about next step, call a tool, observe the result, reason again, repeat until done. Each iteration can involve reading code, writing edits, running tests, or searching.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 260,
+                    term: "Inline Completion",
+                    explanation:
+                        "AI-generated code suggestions that appear directly in the editor as ghost text while typing. The developer accepts (Tab) or dismisses them. The original paradigm established by GitHub Copilot.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 261,
+                    term: "Chat Panel",
+                    explanation:
+                        "A side panel in the IDE where developers ask questions about code, request explanations, or give instructions in natural language. Conversational rather than predictive.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 262,
+                    term: "Agent Mode",
+                    explanation:
+                        "A mode where the AI operates autonomously: it plans steps, reads files, writes code, runs commands, checks results, and iterates -- all from a single high-level instruction. Contrast with Chat Mode (Q&A) and Inline Completion (passive suggestions).",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 263,
+                    term: "Diff View",
+                    explanation:
+                        "A visual display showing the before/after of AI-proposed changes, letting developers review exactly what will be modified before accepting. Standard in Cursor, VS Code Copilot, and most AI coding tools.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 264,
+                    term: "Accept/Reject Workflow",
+                    explanation:
+                        "The fundamental interaction pattern in AI-assisted coding: the AI proposes a change (inline completion, diff, or multi-file edit), and the developer accepts or rejects it. Ensures human control over AI output.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 265,
+                    term: "Human-in-the-Loop (HITL)",
+                    explanation:
+                        "A pattern where certain agent actions require explicit human approval before execution. Rule of thumb: if a mistake is reversible, automate; if irreversible (money, compliance, reputation), gate with human review. Implemented via permission modes, tool annotations, and approval prompts.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 266,
+                    term: "Multi-Step Task Execution",
+                    explanation:
+                        "An agent's ability to break a high-level instruction into multiple sequential steps, executing each with appropriate tools, handling errors, and adapting the plan based on intermediate results.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 267,
+                    term: "File Read/Write/Edit Tools",
+                    explanation:
+                        "The built-in tool primitives that let an AI agent interact with the filesystem. Typically includes Read (view file contents), Write (create/overwrite files), Edit (apply targeted string replacements), and Glob/Grep (search for files/content).",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 268,
+                    term: "Terminal Execution",
+                    explanation:
+                        "The ability of an AI coding agent to run arbitrary shell commands, observe their output, and use the results to inform next steps. Enables running tests, installing dependencies, checking git status, and interacting with any CLI tool.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 269,
+                    term: "Browser Automation (Computer Use)",
+                    explanation:
+                        "The ability of an AI agent to control a web browser -- navigate pages, fill forms, click buttons, read content -- for testing, scraping, or interacting with web-based tools. Implemented via MCP servers or native capabilities like Anthropic's Computer Use.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 270,
+                    term: "Supervisor Pattern / Reviewer-Developer Loop",
+                    explanation:
+                        "An agentic pattern where one LLM generates output and another evaluates and provides feedback in iterative loops. Example: a Developer agent writes code, a Reviewer agent checks it, and they iterate until quality standards are met.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 271,
+                    term: "Repository Context",
+                    explanation:
+                        "The full set of information an AI coding tool gathers about a codebase -- file structure, dependencies, imports, class hierarchies, function signatures -- to inform its responses. The quality of repository context directly determines AI output quality.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 272,
+                    term: "Semantic Code Search",
+                    explanation:
+                        'Search that uses vector embeddings to find code by meaning rather than exact text matching. When you search for "authentication handler", it finds relevant code even if those exact words do not appear. Powered by codebase indexing.',
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 273,
+                    term: "Agentic Engineering",
+                    explanation:
+                        "The successor concept to vibe coding (2026 terminology). The discipline of designing systems where AI agents plan, write, test, and ship code under structured human oversight. Emphasises orchestration, guardrails, and production quality rather than casual prompting.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 274,
+                    term: "AI Pair Programming",
+                    explanation:
+                        "Working with an AI assistant as a collaborative partner -- similar to human pair programming but with one developer and one AI. The AI suggests, generates, explains, and reviews while the human guides, decides, and validates.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 275,
+                    term: "AI Code Review",
+                    explanation:
+                        "Automated analysis of pull requests and code changes by AI. Tools like Cursor BugBot, Qodo, and Copilot review PRs for bugs, style violations, security issues, and logic errors. Some tools can also propose and test fixes automatically.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 276,
+                    term: "AI Refactoring",
+                    explanation:
+                        "AI-assisted restructuring of existing code without changing its behaviour. Includes renaming, extracting functions, converting between languages, modernising legacy code, and optimising performance. Typically operates across multiple files.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 277,
+                    term: "AI Test Generation",
+                    explanation:
+                        "The use of AI to automatically create unit tests, integration tests, or end-to-end tests from code, documentation, or natural language descriptions. A core capability of most AI coding assistants.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 278,
+                    term: "Token Budget / Token Limit",
+                    explanation:
+                        "The maximum number of tokens an AI model can process in a single conversation turn or session. Determines how much code, context, and history can fit. As of March 2026, Claude's 1M-token window is the largest generally available.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 279,
+                    term: "Remote Agents / Cloud Agents",
+                    explanation:
+                        "AI coding agents that run on remote cloud infrastructure rather than the developer's local machine. They clone repos, work on branches, and push changes asynchronously. Offered by Cursor (Background Agent), GitHub (Copilot Coding Agent), and others.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 280,
+                    term: "Multi-Agent Development",
+                    explanation:
+                        "The paradigm (formalised February 2026) where multiple AI agents from different providers (Copilot, Claude, Codex) run alongside each other. VS Code's multi-agent hub and GitHub's Agent HQ enable choosing the right agent for each task.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 281,
+                    term: "LSP (Language Server Protocol)",
+                    explanation:
+                        "A standardised protocol for code intelligence (autocomplete, go-to-definition, diagnostics). Claude Code plugins can include LSP servers to provide language-specific intelligence alongside AI capabilities.",
+                    tag: "Agentic Patterns",
+                    section: "Agentic Coding Patterns & Concepts",
+                    sectionNum: 24,
+                },
+                {
+                    id: 282,
+                    term: "SWE-bench",
+                    explanation:
+                        "The primary benchmark for evaluating LLMs on real-world software engineering. Given a GitHub codebase and an issue, the model must generate a patch that resolves the problem. Collected from real GitHub repositories.",
+                    tag: "Benchmarks",
+                    section: "AI Coding Benchmarks",
+                    sectionNum: 25,
+                },
+                {
+                    id: 283,
+                    term: "SWE-bench Verified",
+                    explanation:
+                        "A human-validated subset of 500 high-quality SWE-bench test cases (released August 2024). Provides a more reliable evaluation signal by eliminating ambiguous or poorly specified problems.",
+                    tag: "Benchmarks",
+                    section: "AI Coding Benchmarks",
+                    sectionNum: 25,
+                },
+                {
+                    id: 284,
+                    term: "SWE-agent",
+                    explanation:
+                        "An open-source framework (Princeton/Stanford) that wraps an LLM to automatically resolve GitHub issues. Achieves state-of-the-art results on SWE-bench. Provides agent scaffolding (tool interfaces, error handling) around the LLM.",
+                    tag: "Benchmarks",
+                    section: "AI Coding Benchmarks",
+                    sectionNum: 25,
+                },
+                {
+                    id: 285,
+                    term: "Terminal-Bench",
+                    explanation:
+                        "Launched May 2025 (Stanford / Laude Institute). Evaluates whether AI agents can operate inside a real, sandboxed command-line environment, measuring planning, execution, and recovery across multi-step workflows.",
+                    tag: "Benchmarks",
+                    section: "AI Coding Benchmarks",
+                    sectionNum: 25,
+                },
+                {
+                    id: 286,
+                    term: "Cline Bench",
+                    explanation:
+                        "Introduced November 2025. Evaluates agents inside realistic, repository-based development environments by converting real project snapshots and failure cases into reproducible evaluation scenarios.",
+                    tag: "Benchmarks",
+                    section: "AI Coding Benchmarks",
+                    sectionNum: 25,
+                },
+                {
+                    id: 287,
+                    term: "DPAI Arena",
+                    explanation:
+                        "Launched October 2025 by JetBrains. Benchmarks coding agents across multiple languages, evaluating the full engineering lifecycle: patching, test generation, code review, and repository navigation.",
+                    tag: "Benchmarks",
+                    section: "AI Coding Benchmarks",
+                    sectionNum: 25,
+                },
+                {
+                    id: 288,
+                    term: "HumanEval",
+                    explanation:
+                        "An OpenAI benchmark consisting of 164 hand-crafted Python programming problems used to evaluate code generation capabilities. Each problem includes a function signature, docstring, and unit tests.",
+                    tag: "Benchmarks",
+                    section: "AI Coding Benchmarks",
+                    sectionNum: 25,
+                },
+                {
+                    id: 289,
+                    term: "MMLU (Massive Multitask Language Understanding)",
+                    explanation:
+                        "A benchmark testing LLMs across 57 academic subjects (STEM, humanities, social sciences). Used to measure general knowledge and reasoning, not coding-specific.",
+                    tag: "Benchmarks",
+                    section: "AI Coding Benchmarks",
+                    sectionNum: 25,
+                },
+            ];
+            const sections = [...new Set(TERMS.map((t) => t.section))];
+            const sectionMap = {};
+            TERMS.forEach((t) => {
+                if (!sectionMap[t.section])
+                    sectionMap[t.section] = { num: t.sectionNum, terms: [] };
+                sectionMap[t.section].terms.push(t);
+            });
+
+            let activeFilters = new Set();
+            let searchQuery = "";
+            let currentView = "cards";
+
+            const filterRow = document.getElementById("filterRow");
+            const allPill = document.createElement("button");
+            allPill.className = "filter-pill active";
+            allPill.innerHTML =
+                'All <span class="pill-count">' + TERMS.length + "</span>";
+            allPill.onclick = () => {
+                activeFilters.clear();
+                updateFilters();
+            };
+            filterRow.appendChild(allPill);
+
+            sections.forEach((sec) => {
+                const count = sectionMap[sec].terms.length;
+                const pill = document.createElement("button");
+                pill.className = "filter-pill";
+                pill.dataset.section = sec;
+                pill.innerHTML =
+                    sec + ' <span class="pill-count">' + count + "</span>";
+                pill.onclick = () => toggleFilter(sec);
+                filterRow.appendChild(pill);
+            });
+
+            function toggleFilter(section) {
+                if (activeFilters.has(section)) activeFilters.delete(section);
+                else activeFilters.add(section);
+                updateFilters();
+            }
+
+            function updateFilters() {
+                document.querySelectorAll(".filter-pill").forEach((p) => {
+                    if (p.dataset.section)
+                        p.classList.toggle(
+                            "active",
+                            activeFilters.has(p.dataset.section),
+                        );
+                    else p.classList.toggle("active", activeFilters.size === 0);
+                });
+                render();
+            }
+
+            const searchInput = document.getElementById("searchInput");
+            searchInput.addEventListener("input", (e) => {
+                searchQuery = e.target.value.trim().toLowerCase();
+                render();
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "/" && document.activeElement !== searchInput) {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+                if (
+                    e.key === "Escape" &&
+                    document.activeElement === searchInput
+                ) {
+                    searchInput.blur();
+                    searchInput.value = "";
+                    searchQuery = "";
+                    render();
+                }
+            });
+
+            function setView(view) {
+                currentView = view;
+                document
+                    .getElementById("viewCards")
+                    .classList.toggle("active", view === "cards");
+                document
+                    .getElementById("viewTable")
+                    .classList.toggle("active", view === "table");
+                document
+                    .getElementById("cardsView")
+                    .classList.toggle("hidden", view !== "cards");
+                document
+                    .getElementById("tableView")
+                    .classList.toggle("hidden", view !== "table");
+                render();
+            }
+
+            function highlight(text, query) {
+                if (!query) return escapeHtml(text);
+                const escaped = escapeHtml(text);
+                const regex = new RegExp("(" + escapeRegex(query) + ")", "gi");
+                return escaped.replace(regex, "<mark>$1</mark>");
+            }
+            function escapeHtml(s) {
+                return s
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;");
+            }
+            function escapeRegex(s) {
+                return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            }
+
+            function render() {
+                const filtered = TERMS.filter((t) => {
+                    if (activeFilters.size > 0 && !activeFilters.has(t.section))
+                        return false;
+                    if (searchQuery) {
+                        const q = searchQuery;
+                        return (
+                            t.term.toLowerCase().includes(q) ||
+                            t.explanation.toLowerCase().includes(q) ||
+                            t.tag.toLowerCase().includes(q) ||
+                            t.section.toLowerCase().includes(q)
+                        );
+                    }
+                    return true;
+                });
+                document.getElementById("resultCount").textContent =
+                    filtered.length;
+                document
+                    .getElementById("emptyState")
+                    .classList.toggle("hidden", filtered.length > 0);
+                document
+                    .getElementById(
+                        currentView === "cards" ? "cardsView" : "tableView",
+                    )
+                    .classList.toggle("hidden", filtered.length === 0);
+                if (currentView === "cards") renderCards(filtered);
+                else renderTable(filtered);
+            }
+
+            function renderCards(terms) {
+                const container = document.getElementById("termsContainer");
+                const grouped = {};
+                terms.forEach((t) => {
+                    if (!grouped[t.section]) grouped[t.section] = [];
+                    grouped[t.section].push(t);
+                });
+                let html = "";
+                sections.forEach((sec) => {
+                    if (!grouped[sec]) return;
+                    const items = grouped[sec];
+                    html +=
+                        '<div class="section-header">' +
+                        sec +
+                        ' <span class="section-count">' +
+                        items.length +
+                        " term" +
+                        (items.length !== 1 ? "s" : "") +
+                        "</span></div>";
+                    html += '<div class="terms-grid">';
+                    items.forEach((t) => {
+                        html +=
+                            '<div class="term-card">' +
+                            '<div class="term-header"><span class="term-name">' +
+                            highlight(t.term, searchQuery) +
+                            '</span><span class="term-id">#' +
+                            t.id +
+                            "</span></div>" +
+                            '<div class="term-explanation">' +
+                            highlight(t.explanation, searchQuery) +
+                            "</div>" +
+                            '<div class="term-meta"><span class="term-tag">' +
+                            highlight(t.tag, searchQuery) +
+                            "</span></div>" +
+                            "</div>";
+                    });
+                    html += "</div>";
+                });
+                container.innerHTML = html;
+            }
+
+            function renderTable(terms) {
+                const tbody = document.getElementById("tableBody");
+                let html = "";
+                terms.forEach((t) => {
+                    html +=
+                        "<tr>" +
+                        '<td class="col-id">' +
+                        t.id +
+                        "</td>" +
+                        '<td class="col-term">' +
+                        highlight(t.term, searchQuery) +
+                        "</td>" +
+                        "<td>" +
+                        highlight(t.explanation, searchQuery) +
+                        "</td>" +
+                        '<td class="col-tag"><span>' +
+                        highlight(t.tag, searchQuery) +
+                        "</span></td>" +
+                        "</tr>";
+                });
+                tbody.innerHTML = html;
+            }
+
+            render();
+        </script>
+    </body>
+</html>
