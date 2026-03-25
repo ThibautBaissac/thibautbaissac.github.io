@@ -36,6 +36,24 @@
                 margin-bottom: 32px;
                 border-bottom: 2px solid var(--accent);
                 padding-bottom: 16px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .repo-link {
+                font-family: "Menlo", "Consolas", monospace;
+                font-size: 0.8rem;
+                color: var(--accent);
+                text-decoration: none;
+                border: 1px solid var(--accent);
+                padding: 6px 12px;
+                border-radius: 4px;
+                transition: background 0.2s, color 0.2s;
+                white-space: nowrap;
+            }
+            .repo-link:hover {
+                background: var(--accent);
+                color: #fff;
             }
             h1 {
                 font-size: 1.6rem;
@@ -369,10 +387,13 @@
     </head>
     <body>
         <header>
-            <h1>AI Terminology Glossary</h1>
-            <p class="subtitle">
-                289 terms across 25 categories &mdash; April 2026
-            </p>
+            <div>
+                <h1>AI Terminology Glossary</h1>
+                <p class="subtitle">
+                    289 terms across 25 categories &mdash; April 2026
+                </p>
+            </div>
+            <a href="https://github.com/ThibautBaissac/rails_ai_agents" class="repo-link" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
         </header>
         <div class="search-container">
             <div class="search-box">
