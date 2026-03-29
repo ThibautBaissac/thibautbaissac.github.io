@@ -6,17 +6,22 @@
         <title>AI Terminology Glossary</title>
         <style>
             :root {
-                --text: #1a1a2e;
-                --muted: #555;
-                --accent: #2d5a7b;
-                --bg: #ffffff;
-                --quote-bg: #f4f7fa;
-                --divider: #e0e0e0;
-                --card-hover: 0 3px 12px rgba(0, 0, 0, 0.1);
-                --tag-bg: #e8eef3;
-                --tag-active-bg: #2d5a7b;
-                --tag-active-text: #fff;
-                --search-bg: #f8f9fb;
+                --text: #e0e0e8;
+                --muted: #8a8fa0;
+                --accent: #4a9eff;
+                --bg: #0f1117;
+                --surface: #1a1d28;
+                --quote-bg: #1a1d28;
+                --divider: #2e3140;
+                --card-hover: 0 2px 8px rgba(0, 0, 0, 0.4);
+                --tag-bg: rgba(74, 158, 255, 0.1);
+                --tag-active-bg: #4a9eff;
+                --tag-active-text: #0f1117;
+                --search-bg: #1a1d28;
+                --green: #3dd68c;
+                --amber: #f0b429;
+                --red: #ef4444;
+                --purple: #a78bfa;
             }
             * {
                 margin: 0;
@@ -24,48 +29,52 @@
                 box-sizing: border-box;
             }
             body {
-                font-family: "Georgia", "Times New Roman", serif;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
                 color: var(--text);
                 background: var(--bg);
-                line-height: 1.75;
+                line-height: 1.6;
+                font-size: 14px;
                 max-width: 960px;
                 margin: 0 auto;
                 padding: 40px 24px 80px;
             }
             header {
                 margin-bottom: 32px;
-                border-bottom: 2px solid var(--accent);
+                border-bottom: 1px solid var(--divider);
                 padding-bottom: 16px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
             .repo-link {
-                font-family: "Menlo", "Consolas", monospace;
-                font-size: 0.8rem;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                font-size: 11px;
                 color: var(--accent);
                 text-decoration: none;
-                border: 1px solid var(--accent);
+                border: 1px solid var(--divider);
                 padding: 6px 12px;
-                border-radius: 4px;
+                border-radius: 8px;
                 transition: background 0.2s, color 0.2s;
                 white-space: nowrap;
             }
             .repo-link:hover {
                 background: var(--accent);
-                color: #fff;
+                color: var(--bg);
             }
             h1 {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
                 font-weight: 700;
-                letter-spacing: -0.02em;
-                color: var(--accent);
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                color: var(--text);
                 margin-bottom: 6px;
             }
             .subtitle {
-                font-size: 0.9rem;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                font-size: 11px;
                 color: var(--muted);
-                font-style: italic;
+                font-style: normal;
+                letter-spacing: 0.02em;
             }
             .search-container {
                 position: sticky;
@@ -75,17 +84,18 @@
                 padding: 16px 0 12px;
                 border-bottom: 1px solid var(--divider);
                 margin-bottom: 20px;
+                backdrop-filter: blur(8px);
             }
             .search-box {
                 position: relative;
             }
             .search-box input {
                 width: 100%;
-                padding: 12px 16px 12px 42px;
-                font-family: "Menlo", "Consolas", monospace;
-                font-size: 0.9rem;
+                padding: 10px 16px 10px 42px;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                font-size: 13px;
                 border: 1px solid var(--divider);
-                border-radius: 6px;
+                border-radius: 8px;
                 background: var(--search-bg);
                 color: var(--text);
                 outline: none;
@@ -95,17 +105,17 @@
             }
             .search-box input:focus {
                 border-color: var(--accent);
-                box-shadow: 0 0 0 3px rgba(45, 90, 123, 0.1);
+                box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.15);
             }
             .search-box input::placeholder {
-                color: #999;
+                color: #555;
             }
             .search-icon {
                 position: absolute;
                 left: 14px;
                 top: 50%;
                 transform: translateY(-50%);
-                color: #999;
+                color: var(--muted);
                 font-size: 1rem;
                 pointer-events: none;
             }
@@ -114,22 +124,24 @@
                 right: 12px;
                 top: 50%;
                 transform: translateY(-50%);
-                font-family: "Menlo", "Consolas", monospace;
-                font-size: 0.7rem;
-                color: #aaa;
-                background: #eee;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                font-size: 11px;
+                color: var(--muted);
+                background: var(--surface);
                 padding: 2px 6px;
-                border-radius: 3px;
-                border: 1px solid #ddd;
+                border-radius: 4px;
+                border: 1px solid var(--divider);
             }
             .stats-bar {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                font-size: 0.82rem;
+                font-size: 11px;
                 color: var(--muted);
                 margin-bottom: 16px;
-                font-family: "Menlo", "Consolas", monospace;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
             }
             .stats-bar .count {
                 font-weight: 700;
@@ -140,20 +152,20 @@
                 gap: 4px;
             }
             .view-toggle button {
-                background: var(--tag-bg);
+                background: var(--surface);
                 border: 1px solid var(--divider);
-                border-radius: 4px;
+                border-radius: 8px;
                 padding: 4px 10px;
-                font-family: "Menlo", "Consolas", monospace;
-                font-size: 0.75rem;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                font-size: 11px;
                 color: var(--muted);
                 cursor: pointer;
                 transition: all 0.15s;
             }
             .view-toggle button.active {
-                background: var(--tag-active-bg);
-                color: var(--tag-active-text);
-                border-color: var(--tag-active-bg);
+                background: var(--accent);
+                color: var(--bg);
+                border-color: var(--accent);
             }
             .filter-row {
                 display: flex;
@@ -166,11 +178,11 @@
                 align-items: center;
                 gap: 4px;
                 padding: 4px 12px;
-                font-family: "Menlo", "Consolas", monospace;
-                font-size: 0.72rem;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                font-size: 11px;
                 border: 1px solid var(--divider);
                 border-radius: 14px;
-                background: var(--bg);
+                background: var(--surface);
                 color: var(--muted);
                 cursor: pointer;
                 transition: all 0.15s;
@@ -182,21 +194,23 @@
                 color: var(--accent);
             }
             .filter-pill.active {
-                background: var(--tag-active-bg);
-                color: var(--tag-active-text);
-                border-color: var(--tag-active-bg);
+                background: var(--accent);
+                color: var(--bg);
+                border-color: var(--accent);
             }
             .filter-pill .pill-count {
-                font-size: 0.65rem;
+                font-size: 10px;
                 opacity: 0.7;
             }
             .filter-pill.active .pill-count {
                 opacity: 0.9;
             }
             .section-header {
-                font-size: 1.1rem;
-                font-weight: 700;
-                color: var(--text);
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--muted);
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
                 margin-top: 36px;
                 margin-bottom: 12px;
                 padding-bottom: 6px;
@@ -206,10 +220,11 @@
                 gap: 8px;
             }
             .section-header .section-count {
-                font-size: 0.75rem;
+                font-size: 11px;
                 font-weight: 400;
                 color: var(--muted);
-                font-family: "Menlo", "Consolas", monospace;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                opacity: 0.6;
             }
             .terms-grid {
                 display: grid;
@@ -217,17 +232,15 @@
                 gap: 10px;
             }
             .term-card {
-                background: var(--bg);
+                background: var(--surface);
                 border: 1px solid var(--divider);
-                border-radius: 6px;
+                border-radius: 8px;
                 padding: 14px 18px;
                 transition:
-                    box-shadow 0.2s,
                     border-color 0.2s;
                 cursor: default;
             }
             .term-card:hover {
-                box-shadow: var(--card-hover);
                 border-color: var(--accent);
             }
             .term-card .term-header {
@@ -238,39 +251,40 @@
                 margin-bottom: 6px;
             }
             .term-card .term-name {
-                font-weight: 700;
-                font-size: 0.95rem;
+                font-weight: 600;
+                font-size: 13px;
                 color: var(--accent);
             }
             .term-card .term-id {
-                font-family: "Menlo", "Consolas", monospace;
-                font-size: 0.7rem;
-                color: #bbb;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                font-size: 11px;
+                color: #555;
                 flex-shrink: 0;
             }
             .term-card .term-explanation {
-                font-size: 0.88rem;
+                font-size: 13px;
                 color: var(--text);
                 line-height: 1.6;
             }
             .term-card .term-meta {
                 display: flex;
-                gap: 8px;
+                gap: 6px;
                 margin-top: 8px;
                 flex-wrap: wrap;
             }
             .term-card .term-tag {
-                font-family: "Menlo", "Consolas", monospace;
-                font-size: 0.68rem;
+                font-family: "SF Mono", "Menlo", "Consolas", monospace;
+                font-size: 11px;
                 padding: 2px 8px;
                 border-radius: 10px;
-                background: var(--tag-bg);
-                color: var(--muted);
+                background: rgba(74, 158, 255, 0.08);
+                color: var(--accent);
+                border: 1px solid rgba(74, 158, 255, 0.2);
             }
             .terms-table {
                 width: 100%;
                 border-collapse: collapse;
-                font-size: 0.85rem;
+                font-size: 13px;
             }
             .terms-table th,
             .terms-table td {
@@ -280,43 +294,47 @@
                 vertical-align: top;
             }
             .terms-table th {
-                background: var(--quote-bg);
-                font-weight: 700;
+                background: var(--surface);
+                font-weight: 600;
                 color: var(--accent);
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
                 position: sticky;
                 top: 62px;
                 z-index: 50;
             }
             .terms-table tr:hover td {
-                background: var(--quote-bg);
+                background: var(--surface);
             }
             .terms-table .col-id {
                 width: 40px;
                 text-align: center;
-                color: #bbb;
-                font-family: "Menlo", monospace;
-                font-size: 0.75rem;
+                color: #555;
+                font-family: "SF Mono", "Menlo", monospace;
+                font-size: 11px;
             }
             .terms-table .col-term {
                 width: 180px;
-                font-weight: 700;
+                font-weight: 600;
                 color: var(--accent);
             }
             .terms-table .col-tag {
                 width: 110px;
             }
             .terms-table .col-tag span {
-                font-family: "Menlo", monospace;
-                font-size: 0.72rem;
-                padding: 2px 6px;
-                background: var(--tag-bg);
-                border-radius: 8px;
-                color: var(--muted);
+                font-family: "SF Mono", "Menlo", monospace;
+                font-size: 11px;
+                padding: 2px 8px;
+                background: rgba(74, 158, 255, 0.08);
+                border: 1px solid rgba(74, 158, 255, 0.2);
+                border-radius: 10px;
+                color: var(--accent);
             }
             mark {
-                background: rgba(45, 90, 123, 0.15);
+                background: rgba(74, 158, 255, 0.2);
                 color: inherit;
-                padding: 0 1px;
+                padding: 0 2px;
                 border-radius: 2px;
             }
             .empty-state {
@@ -344,14 +362,14 @@
                     gap: 4px;
                 }
                 .filter-pill {
-                    font-size: 0.65rem;
+                    font-size: 10px;
                     padding: 3px 8px;
                 }
                 .term-card {
                     padding: 10px 14px;
                 }
                 .terms-table {
-                    font-size: 0.78rem;
+                    font-size: 12px;
                 }
                 .terms-table th,
                 .terms-table td {
@@ -376,7 +394,7 @@
                 }
                 .term-card {
                     break-inside: avoid;
-                    border: 1px solid #ccc;
+                    border: 1px solid var(--divider);
                 }
                 body {
                     max-width: 100%;
